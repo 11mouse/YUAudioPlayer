@@ -1,0 +1,483 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B68995919A5D1F60067749D /* YUAudioProperty.m */; };
+		0BCE136519A1DC260093E91F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136419A1DC260093E91F /* main.m */; };
+		0BCE136819A1DC260093E91F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136719A1DC260093E91F /* AppDelegate.m */; };
+		0BCE136B19A1DC260093E91F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136A19A1DC260093E91F /* ViewController.m */; };
+		0BCE136E19A1DC260093E91F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE136C19A1DC260093E91F /* Main.storyboard */; };
+		0BCE137019A1DC260093E91F /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE136F19A1DC260093E91F /* Images.xcassets */; };
+		0BCE137C19A1DC260093E91F /* YUAudioPlayerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE137B19A1DC260093E91F /* YUAudioPlayerTests.m */; };
+		0BCE138819A1DD270093E91F /* YUAudioPlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE138719A1DD270093E91F /* YUAudioPlayer.m */; };
+		0BCE138B19A1DDE30093E91F /* YUAudioQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE138A19A1DDE30093E91F /* YUAudioQueue.m */; };
+		0BCE138E19A1DDF50093E91F /* YUAudioStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE138D19A1DDF50093E91F /* YUAudioStream.m */; };
+		0BCE139119A1DE0A0093E91F /* YUAudioDataBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139019A1DE0A0093E91F /* YUAudioDataBase.m */; };
+		0BCE139419A1DE240093E91F /* YUAudioDataNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139319A1DE240093E91F /* YUAudioDataNT.m */; };
+		0BCE139719A1DE360093E91F /* YUAudioDataLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */; };
+		0BCE139919A1E5500093E91F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BCE139819A1E5500093E91F /* AudioToolbox.framework */; };
+		0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139A19A20B100093E91F /* pfzl.mp3 */; };
+		0BCE139D19A3639E0093E91F /* 2012070905LcV.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0BCE137619A1DC260093E91F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0BCE135719A1DC260093E91F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0BCE135E19A1DC260093E91F;
+			remoteInfo = YUAudioPlayer;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0B68995819A5D1F60067749D /* YUAudioProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioProperty.h; sourceTree = "<group>"; };
+		0B68995919A5D1F60067749D /* YUAudioProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioProperty.m; sourceTree = "<group>"; };
+		0BCE135F19A1DC260093E91F /* YUAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YUAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BCE136319A1DC260093E91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BCE136419A1DC260093E91F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		0BCE136619A1DC260093E91F /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		0BCE136719A1DC260093E91F /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		0BCE136919A1DC260093E91F /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		0BCE136A19A1DC260093E91F /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		0BCE136D19A1DC260093E91F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		0BCE136F19A1DC260093E91F /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0BCE137519A1DC260093E91F /* YUAudioPlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YUAudioPlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0BCE137A19A1DC260093E91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		0BCE137B19A1DC260093E91F /* YUAudioPlayerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = YUAudioPlayerTests.m; sourceTree = "<group>"; };
+		0BCE138619A1DD270093E91F /* YUAudioPlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioPlayer.h; sourceTree = "<group>"; };
+		0BCE138719A1DD270093E91F /* YUAudioPlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioPlayer.m; sourceTree = "<group>"; };
+		0BCE138919A1DDE30093E91F /* YUAudioQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioQueue.h; sourceTree = "<group>"; };
+		0BCE138A19A1DDE30093E91F /* YUAudioQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioQueue.m; sourceTree = "<group>"; };
+		0BCE138C19A1DDF50093E91F /* YUAudioStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioStream.h; sourceTree = "<group>"; };
+		0BCE138D19A1DDF50093E91F /* YUAudioStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioStream.m; sourceTree = "<group>"; };
+		0BCE138F19A1DE0A0093E91F /* YUAudioDataBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioDataBase.h; sourceTree = "<group>"; };
+		0BCE139019A1DE0A0093E91F /* YUAudioDataBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioDataBase.m; sourceTree = "<group>"; };
+		0BCE139219A1DE240093E91F /* YUAudioDataNT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioDataNT.h; sourceTree = "<group>"; };
+		0BCE139319A1DE240093E91F /* YUAudioDataNT.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioDataNT.m; sourceTree = "<group>"; };
+		0BCE139519A1DE360093E91F /* YUAudioDataLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioDataLocal.h; sourceTree = "<group>"; };
+		0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioDataLocal.m; sourceTree = "<group>"; };
+		0BCE139819A1E5500093E91F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		0BCE139A19A20B100093E91F /* pfzl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pfzl.mp3; sourceTree = "<group>"; };
+		0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 2012070905LcV.m4a; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		0BCE135C19A1DC260093E91F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCE139919A1E5500093E91F /* AudioToolbox.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BCE137219A1DC260093E91F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0BCE135619A1DC260093E91F = {
+			isa = PBXGroup;
+			children = (
+				0BCE139819A1E5500093E91F /* AudioToolbox.framework */,
+				0BCE136119A1DC260093E91F /* YUAudioPlayer */,
+				0BCE137819A1DC260093E91F /* YUAudioPlayerTests */,
+				0BCE136019A1DC260093E91F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		0BCE136019A1DC260093E91F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE135F19A1DC260093E91F /* YUAudioPlayer.app */,
+				0BCE137519A1DC260093E91F /* YUAudioPlayerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0BCE136119A1DC260093E91F /* YUAudioPlayer */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */,
+				0BCE139A19A20B100093E91F /* pfzl.mp3 */,
+				0BCE138519A1DD150093E91F /* Classes */,
+				0BCE136619A1DC260093E91F /* AppDelegate.h */,
+				0BCE136719A1DC260093E91F /* AppDelegate.m */,
+				0BCE136919A1DC260093E91F /* ViewController.h */,
+				0BCE136A19A1DC260093E91F /* ViewController.m */,
+				0BCE136C19A1DC260093E91F /* Main.storyboard */,
+				0BCE136F19A1DC260093E91F /* Images.xcassets */,
+				0BCE136219A1DC260093E91F /* Supporting Files */,
+			);
+			path = YUAudioPlayer;
+			sourceTree = "<group>";
+		};
+		0BCE136219A1DC260093E91F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE136319A1DC260093E91F /* Info.plist */,
+				0BCE136419A1DC260093E91F /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0BCE137819A1DC260093E91F /* YUAudioPlayerTests */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE137B19A1DC260093E91F /* YUAudioPlayerTests.m */,
+				0BCE137919A1DC260093E91F /* Supporting Files */,
+			);
+			path = YUAudioPlayerTests;
+			sourceTree = "<group>";
+		};
+		0BCE137919A1DC260093E91F /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE137A19A1DC260093E91F /* Info.plist */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		0BCE138519A1DD150093E91F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				0BCE138619A1DD270093E91F /* YUAudioPlayer.h */,
+				0BCE138719A1DD270093E91F /* YUAudioPlayer.m */,
+				0BCE138919A1DDE30093E91F /* YUAudioQueue.h */,
+				0BCE138A19A1DDE30093E91F /* YUAudioQueue.m */,
+				0BCE138C19A1DDF50093E91F /* YUAudioStream.h */,
+				0BCE138D19A1DDF50093E91F /* YUAudioStream.m */,
+				0BCE138F19A1DE0A0093E91F /* YUAudioDataBase.h */,
+				0BCE139019A1DE0A0093E91F /* YUAudioDataBase.m */,
+				0BCE139219A1DE240093E91F /* YUAudioDataNT.h */,
+				0BCE139319A1DE240093E91F /* YUAudioDataNT.m */,
+				0BCE139519A1DE360093E91F /* YUAudioDataLocal.h */,
+				0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */,
+				0B68995819A5D1F60067749D /* YUAudioProperty.h */,
+				0B68995919A5D1F60067749D /* YUAudioProperty.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		0BCE135E19A1DC260093E91F /* YUAudioPlayer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BCE137F19A1DC260093E91F /* Build configuration list for PBXNativeTarget "YUAudioPlayer" */;
+			buildPhases = (
+				0BCE135B19A1DC260093E91F /* Sources */,
+				0BCE135C19A1DC260093E91F /* Frameworks */,
+				0BCE135D19A1DC260093E91F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = YUAudioPlayer;
+			productName = YUAudioPlayer;
+			productReference = 0BCE135F19A1DC260093E91F /* YUAudioPlayer.app */;
+			productType = "com.apple.product-type.application";
+		};
+		0BCE137419A1DC260093E91F /* YUAudioPlayerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 0BCE138219A1DC260093E91F /* Build configuration list for PBXNativeTarget "YUAudioPlayerTests" */;
+			buildPhases = (
+				0BCE137119A1DC260093E91F /* Sources */,
+				0BCE137219A1DC260093E91F /* Frameworks */,
+				0BCE137319A1DC260093E91F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				0BCE137719A1DC260093E91F /* PBXTargetDependency */,
+			);
+			name = YUAudioPlayerTests;
+			productName = YUAudioPlayerTests;
+			productReference = 0BCE137519A1DC260093E91F /* YUAudioPlayerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0BCE135719A1DC260093E91F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0600;
+				ORGANIZATIONNAME = duan;
+				TargetAttributes = {
+					0BCE135E19A1DC260093E91F = {
+						CreatedOnToolsVersion = 6.0;
+					};
+					0BCE137419A1DC260093E91F = {
+						CreatedOnToolsVersion = 6.0;
+						TestTargetID = 0BCE135E19A1DC260093E91F;
+					};
+				};
+			};
+			buildConfigurationList = 0BCE135A19A1DC260093E91F /* Build configuration list for PBXProject "YUAudioPlayer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 0BCE135619A1DC260093E91F;
+			productRefGroup = 0BCE136019A1DC260093E91F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				0BCE135E19A1DC260093E91F /* YUAudioPlayer */,
+				0BCE137419A1DC260093E91F /* YUAudioPlayerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		0BCE135D19A1DC260093E91F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCE139D19A3639E0093E91F /* 2012070905LcV.m4a in Resources */,
+				0BCE136E19A1DC260093E91F /* Main.storyboard in Resources */,
+				0BCE137019A1DC260093E91F /* Images.xcassets in Resources */,
+				0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BCE137319A1DC260093E91F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		0BCE135B19A1DC260093E91F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCE136B19A1DC260093E91F /* ViewController.m in Sources */,
+				0BCE139119A1DE0A0093E91F /* YUAudioDataBase.m in Sources */,
+				0BCE138B19A1DDE30093E91F /* YUAudioQueue.m in Sources */,
+				0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */,
+				0BCE136819A1DC260093E91F /* AppDelegate.m in Sources */,
+				0BCE136519A1DC260093E91F /* main.m in Sources */,
+				0BCE138E19A1DDF50093E91F /* YUAudioStream.m in Sources */,
+				0BCE139719A1DE360093E91F /* YUAudioDataLocal.m in Sources */,
+				0BCE139419A1DE240093E91F /* YUAudioDataNT.m in Sources */,
+				0BCE138819A1DD270093E91F /* YUAudioPlayer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0BCE137119A1DC260093E91F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0BCE137C19A1DC260093E91F /* YUAudioPlayerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		0BCE137719A1DC260093E91F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0BCE135E19A1DC260093E91F /* YUAudioPlayer */;
+			targetProxy = 0BCE137619A1DC260093E91F /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		0BCE136C19A1DC260093E91F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				0BCE136D19A1DC260093E91F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		0BCE137D19A1DC260093E91F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		0BCE137E19A1DC260093E91F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		0BCE138019A1DC260093E91F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = YUAudioPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		0BCE138119A1DC260093E91F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				INFOPLIST_FILE = YUAudioPlayer/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		0BCE138319A1DC260093E91F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = YUAudioPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YUAudioPlayer.app/YUAudioPlayer";
+			};
+			name = Debug;
+		};
+		0BCE138419A1DC260093E91F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(SDKROOT)/Developer/Library/Frameworks",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = YUAudioPlayerTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/YUAudioPlayer.app/YUAudioPlayer";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		0BCE135A19A1DC260093E91F /* Build configuration list for PBXProject "YUAudioPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BCE137D19A1DC260093E91F /* Debug */,
+				0BCE137E19A1DC260093E91F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0BCE137F19A1DC260093E91F /* Build configuration list for PBXNativeTarget "YUAudioPlayer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BCE138019A1DC260093E91F /* Debug */,
+				0BCE138119A1DC260093E91F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		0BCE138219A1DC260093E91F /* Build configuration list for PBXNativeTarget "YUAudioPlayerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0BCE138319A1DC260093E91F /* Debug */,
+				0BCE138419A1DC260093E91F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0BCE135719A1DC260093E91F /* Project object */;
+}
