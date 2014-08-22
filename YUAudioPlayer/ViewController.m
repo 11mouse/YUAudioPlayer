@@ -122,7 +122,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];//[self GetAudioUrlFromQualityKey:@"2012070611fOV.m4a" quality:@"MM" cnd:@"cc.cdn.jing.fm"];//@"http://shoutmedia.abc.net.au:10326";//[[NSBundle mainBundle] pathForResource:@"2012070905LcV" ofType:@"m4a"];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
@@ -135,7 +135,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=[self GetAudioUrlFromQualityKey:@"2012070611fOV.m4a" quality:@"MM" cnd:@"cc.cdn.jing.fm"];//[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];//@"http://shoutmedia.abc.net.au:10326";//[[NSBundle mainBundle] pathForResource:@"2012070905LcV" ofType:@"m4a"];
+        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/119386968/14945107241200128.mp3?xcode=e042ad9583729e93bb63d23e3b7c5dd51ab3ef6f35894a4f&song_id=14945107";
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
@@ -143,67 +143,6 @@
     
 }
 
--(void)btnDuration_Events:(UIButton*)btn{
-    [btn setTitle:[NSString stringWithFormat:@"%f",audioPlayer.duration] forState:UIControlStateNormal];
-}
-
--(NSString*)GetAudioUrlFromQualityKey:(NSString*)audioID quality:(NSString*)qualityKey cnd:(NSString*)cdn
-{
-    NSTimeInterval serverTimeInterval=[NSDate date].timeIntervalSince1970;
-    NSString *str1=[audioID substringWithRange:NSMakeRange(0, 4)];
-    NSString *str2=[audioID substringWithRange:NSMakeRange(4, 4)];
-    NSString *str3=[audioID substringWithRange:NSMakeRange(8, 2)];
-    NSString *str4=[audioID substringWithRange:NSMakeRange(10, 2)];
-    NSString *currTimeStr=nil;
-    NSString *uri=[NSString stringWithFormat:@"/%@/%@/%@/%@/%@%@",str1,str2,str3,str4,qualityKey,audioID];
-    NSDateFormatter *dateformatter = [[NSDateFormatter alloc] init];
-    
-    [dateformatter setDateFormat:@"yyyyMMddHHmm"];
-    dateformatter.timeZone=[NSTimeZone timeZoneWithAbbreviation:@"GMT"];
-    NSLocale *cnLocal=[[NSLocale alloc] initWithLocaleIdentifier:@"zh_CN"];
-    [dateformatter setLocale:cnLocal];
-    //    [cnLocal release];
-    if (serverTimeInterval>0) {
-        NSDate *serverDate=[NSDate dateWithTimeIntervalSince1970:serverTimeInterval];
-        NSDate *bjDate=[serverDate dateByAddingTimeInterval:8*60*60];
-        currTimeStr=[dateformatter stringFromDate:bjDate];
-    }
-    else
-    {
-        
-        NSDate *gmtDate=[NSDate date];
-        NSDate *bjDate=[gmtDate dateByAddingTimeInterval:8*60*60];
-        currTimeStr=[dateformatter stringFromDate:bjDate];
-    }
-    //    [dateformatter release];
-    NSString *key=nil;
-    if ([@"cc.cdn.jing.fm" isEqualToString:cdn]) {
-        key=@"Zwm8JCTa6x3YhVzL";
-    }
-    else
-    {
-        key=@"KupKVv)#4ktKufaT3&XmpV8dDENib)cq";
-    }
-    
-    NSString *md5Str=[NSString stringWithFormat:@"%@%@%@",key,currTimeStr,uri];
-    NSString *md5=[self md5:md5Str];
-    NSString *url=[NSString stringWithFormat:@"http://%@/%@/%@%@",cdn,currTimeStr,md5,uri];
-    return url;
-}
-
-- (NSString *) md5:(NSString*)str
-{
-    const char *cStr = [str UTF8String];
-    unsigned char result[16];
-    CC_MD5( cStr, strlen(cStr), result ); // This is the md5 call
-    return [NSString stringWithFormat:
-            @"%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x%02x",
-            result[0], result[1], result[2], result[3],
-            result[4], result[5], result[6], result[7],
-            result[8], result[9], result[10], result[11],
-            result[12], result[13], result[14], result[15]
-            ];
-}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>2411077A-62F9-4C00-AC25-AD0F1787D011</string>
+	<key>IDESourceControlProjectName</key>
+	<string>YUAudioPlayer</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>9B0814CCEE76549AF17C2A35CA655FE18393C49F</key>
+		<string>https://github.com/11mouse/YUAudioPlayer.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>YUAudioPlayer.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>9B0814CCEE76549AF17C2A35CA655FE18393C49F</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/11mouse/YUAudioPlayer.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>9B0814CCEE76549AF17C2A35CA655FE18393C49F</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>9B0814CCEE76549AF17C2A35CA655FE18393C49F</string>
+			<key>IDESourceControlWCCName</key>
+			<string>YUAudioPlayer</string>
+		</dict>
+	</array>
+</dict>
+</plist>
