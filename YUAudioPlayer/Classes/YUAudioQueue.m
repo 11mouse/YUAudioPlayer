@@ -171,7 +171,7 @@ typedef enum {
     [conditionLock lock];
     [conditionLock signal];
     [conditionLock unlock];
-    [self stop];
+    AudioQueueReset(audioQueue);
 }
 
 -(void)seeked

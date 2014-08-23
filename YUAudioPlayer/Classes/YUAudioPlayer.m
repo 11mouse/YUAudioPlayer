@@ -40,7 +40,9 @@
     {
         if (self.audioPlayerDelegate) {
             [self.audioPlayerDelegate audioPlayer_StateChanged:_audioProperty.state error:_audioProperty.error];
-            _audioProperty.error=nil;
+            if (_audioProperty.error) {
+                _audioProperty.error=nil;
+            }
         }
     }
     if([keyPath isEqualToString:@"audioProperty.error"])
