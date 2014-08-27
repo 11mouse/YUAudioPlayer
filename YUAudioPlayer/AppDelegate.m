@@ -7,9 +7,12 @@
 //
 
 #import "AppDelegate.h"
-
+#import "SelectViewController.h"
 @interface AppDelegate ()
-
+{
+    SelectViewController *selectViewController;
+    UINavigationController *navController;
+}
 @end
 
 @implementation AppDelegate
@@ -17,6 +20,11 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    _window=[[UIWindow alloc] initWithFrame:CGRectMake(0, 0, [UIScreen mainScreen].bounds.size.width, [UIScreen mainScreen].bounds.size.height)];
+    selectViewController=[[SelectViewController alloc] init];
+    navController=[[UINavigationController alloc] initWithRootViewController:selectViewController];
+    _window.rootViewController=navController;
+    [_window makeKeyAndVisible];
     return YES;
 }
 

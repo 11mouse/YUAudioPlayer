@@ -27,7 +27,7 @@
 {
     self = [super init];
     if (self) {
-        readLength=4096;
+        readLength=2048;
         isContine=YES;
         newOffset=0;
     }
@@ -73,10 +73,6 @@
     }
 }
 
-///挂起
--(void)pending{
-    
-}
 ///取消
 -(void)cancel{
     if (fileTimer) {

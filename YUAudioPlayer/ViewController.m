@@ -25,6 +25,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    self.view.backgroundColor=[UIColor whiteColor];
     UIButton *btn=[UIButton buttonWithType:UIButtonTypeCustom];
     btn.frame=CGRectMake(10, 90, 100, 30);
     [btn setTitle:@"播放本地" forState:UIControlStateNormal];
@@ -122,7 +123,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"20140827163637" ofType:@"amr"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
@@ -135,7 +136,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/119386968/14945107241200128.mp3?xcode=e042ad9583729e93bb63d23e3b7c5dd51ab3ef6f35894a4f&song_id=14945107";
+        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/107182776/86772502165600128.mp3?xcode=39e03b86d8ea5981df41111f7de8452dba9e77bffa43fb3d&song_id=86772502";
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
