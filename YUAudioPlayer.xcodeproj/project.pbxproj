@@ -13,8 +13,6 @@
 		0B5450EF19AB2C840002B2C8 /* YUAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450EE19AB2C840002B2C8 /* YUAudioFile.m */; };
 		0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B68995919A5D1F60067749D /* YUAudioProperty.m */; };
 		0B7976D519ADC5620003FD39 /* RecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7976D419ADC5620003FD39 /* RecordListViewController.m */; };
-		0B7976D819ADD0FB0003FD39 /* 20140827163557.aac in Resources */ = {isa = PBXBuildFile; fileRef = 0B7976D619ADD0FB0003FD39 /* 20140827163557.aac */; };
-		0B7976D919ADD0FB0003FD39 /* 20140827163637.amr in Resources */ = {isa = PBXBuildFile; fileRef = 0B7976D719ADD0FB0003FD39 /* 20140827163637.amr */; };
 		0BCE136519A1DC260093E91F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136419A1DC260093E91F /* main.m */; };
 		0BCE136819A1DC260093E91F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136719A1DC260093E91F /* AppDelegate.m */; };
 		0BCE136B19A1DC260093E91F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136A19A1DC260093E91F /* ViewController.m */; };
@@ -28,7 +26,6 @@
 		0BCE139719A1DE360093E91F /* YUAudioDataLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */; };
 		0BCE139919A1E5500093E91F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BCE139819A1E5500093E91F /* AudioToolbox.framework */; };
 		0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139A19A20B100093E91F /* pfzl.mp3 */; };
-		0BCE139D19A3639E0093E91F /* 2012070905LcV.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,8 +51,6 @@
 		0B68995919A5D1F60067749D /* YUAudioProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioProperty.m; sourceTree = "<group>"; };
 		0B7976D319ADC5620003FD39 /* RecordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordListViewController.h; path = YUAudioPlayer/RecordListViewController.h; sourceTree = SOURCE_ROOT; };
 		0B7976D419ADC5620003FD39 /* RecordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordListViewController.m; path = YUAudioPlayer/RecordListViewController.m; sourceTree = SOURCE_ROOT; };
-		0B7976D619ADD0FB0003FD39 /* 20140827163557.aac */ = {isa = PBXFileReference; lastKnownFileType = file; path = 20140827163557.aac; sourceTree = "<group>"; };
-		0B7976D719ADD0FB0003FD39 /* 20140827163637.amr */ = {isa = PBXFileReference; lastKnownFileType = file; path = 20140827163637.amr; sourceTree = "<group>"; };
 		0BCE135F19A1DC260093E91F /* YUAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YUAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE136319A1DC260093E91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BCE136419A1DC260093E91F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -81,7 +76,6 @@
 		0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioDataLocal.m; sourceTree = "<group>"; };
 		0BCE139819A1E5500093E91F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		0BCE139A19A20B100093E91F /* pfzl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pfzl.mp3; sourceTree = "<group>"; };
-		0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = 2012070905LcV.m4a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,9 +119,6 @@
 		0BCE136119A1DC260093E91F /* YUAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				0B7976D619ADD0FB0003FD39 /* 20140827163557.aac */,
-				0B7976D719ADD0FB0003FD39 /* 20140827163637.amr */,
-				0BCE139C19A3639E0093E91F /* 2012070905LcV.m4a */,
 				0BCE139A19A20B100093E91F /* pfzl.mp3 */,
 				0BCE138519A1DD150093E91F /* Classes */,
 				0BCE136619A1DC260093E91F /* AppDelegate.h */,
@@ -277,9 +268,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0B7976D819ADD0FB0003FD39 /* 20140827163557.aac in Resources */,
-				0BCE139D19A3639E0093E91F /* 2012070905LcV.m4a in Resources */,
-				0B7976D919ADD0FB0003FD39 /* 20140827163637.amr in Resources */,
 				0BCE137019A1DC260093E91F /* Images.xcassets in Resources */,
 				0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */,
 			);

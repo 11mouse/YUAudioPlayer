@@ -62,7 +62,7 @@
             currOffset=0;
             if (!fileTimer) {
                 NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
-                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(fileTimer_intval) userInfo:nil repeats:YES];
+                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(fileTimer_intval:) userInfo:nil repeats:YES];
                 [runLoop run];
             }
         }
@@ -85,25 +85,31 @@
     }
 }
 
--(void)fileTimer_intval{
+-(void)fileTimer_intval:(NSTimer*)currTimer{
+    if (!fileTimer) {
+        return;
+    }
     if (newOffset>0) {
         currOffset=newOffset;
     }
     long currReadLength=readLength;
     if (currOffset+readLength>fileSize) {
         currReadLength=fileSize-currOffset;
-        if (fileTimer) {
-            [fileTimer invalidate];
-            fileTimer=nil;
-        }
     }
     if (newOffset>0){
         [filehandle seekToFileOffset:newOffset];
         newOffset=0;
     }
     NSData* data=[filehandle readDataOfLength:currReadLength];
-    if (self.audioDataDelegate) {
+    if (self.audioDataDelegate&&fileTimer) {
         [self.audioDataDelegate audioData_Arrived:data contine:isContine];
+    }
+    currOffset+=readLength;
+    if (currOffset>=fileSize) {
+        if (fileTimer) {
+            [fileTimer invalidate];
+            fileTimer=nil;
+        }
     }
     if (!isContine) {
         isContine=YES;

@@ -123,7 +123,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"20140827163637" ofType:@"amr"];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];

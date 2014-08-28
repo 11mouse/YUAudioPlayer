@@ -14,10 +14,6 @@
 -(void)start{
     
 }
-///挂起
--(void)pending{
-    
-}
 ///取消
 -(void)cancel{
     

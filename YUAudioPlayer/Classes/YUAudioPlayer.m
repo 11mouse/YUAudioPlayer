@@ -48,7 +48,7 @@
     if([keyPath isEqualToString:@"audioProperty.error"])
     {
         if (_audioProperty.error) {
-            [self stop];
+            [self performSelectorOnMainThread:@selector(stop) withObject:nil waitUntilDone:NO];
         }
         
     }

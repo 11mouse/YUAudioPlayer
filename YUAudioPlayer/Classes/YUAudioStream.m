@@ -47,7 +47,7 @@
 
 -(void)audioStreamParseBytes:(NSData*)data flags:(UInt32)flags{
     if (_audioFileStreamID) {
-        OSStatus status= AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)data.length, data.bytes, flags);
+        OSStatus status= AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)data.length, data.bytes, flags);;
         if (status!=noErr)
         {
             NSError *error=[NSError errorWithDomain:@"AudioFileStream parse error" code:status userInfo:nil];
@@ -70,6 +70,7 @@
 
 -(void)close{
     AudioFileStreamClose(_audioFileStreamID);
+    _audioFileStreamID=nil;
 }
 
 #pragma mark audioStream Proc
