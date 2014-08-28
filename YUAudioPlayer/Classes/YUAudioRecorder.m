@@ -24,10 +24,31 @@
 - (instancetype)initWithAudioDesc:(YURecordFormat)recordDesc{
     self = [super init];
     if (self) {
-        
-        
+        [self addObserver:self forKeyPath:@"audioProperty.error" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
     }
     return self;
+}
+
+-(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if([keyPath isEqualToString:@"audioProperty.error"])
+    {
+        if (self.audioProperty.error) {
+            if (audioQueue) {
+                [audioQueue stopRecord];
+                audioQueue=nil;
+            }
+            if (audioFile) {
+                [audioFile stop];
+                audioFile=nil;
+            }
+            if (self.audioRecorderDelegate) {
+                [self.audioRecorderDelegate audioRecorder_Error:self.audioProperty.error];
+            }
+            self.audioProperty=nil;
+        }
+        
+    }
 }
 
 -(NSString *)recordFilePath{
@@ -111,6 +132,11 @@
     recordFormat.mBitsPerChannel=bits;
     recordFormat.mChannelsPerFrame=channel;
     return recordFormat;
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self forKeyPath:@"audioProperty.error"];
 }
 
 @end

@@ -9,9 +9,16 @@
 #import <Foundation/Foundation.h>
 #import "YUAudioProperty.h"
 
+@protocol YUAudioRecorderDelegate <NSObject>
+
+-(void)audioRecorder_Error:(NSError*)error;
+
+@end
+
 @interface YUAudioRecorder : NSObject
 
 @property(nonatomic,readonly) NSString* recordFilePath;
+@property(nonatomic,assign) id<YUAudioRecorderDelegate> audioRecorderDelegate;
 
 -(void)startWithUrl:(NSString*)fileUrlStr withAudioDesc:(YURecordFormat)recordDesc;
 -(void)stop;

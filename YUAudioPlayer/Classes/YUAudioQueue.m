@@ -401,7 +401,12 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
 -(void)startRecord{
     [self createRecordQueue];
     ioPacketNum=0;
-    AudioQueueStart(audioQueue, NULL);
+    OSStatus status=AudioQueueStart(audioQueue, NULL);
+    if (status!=noErr) {
+        NSError *error=[NSError errorWithDomain:@"AudioQueue Record Start error" code:status userInfo:nil];
+        _audioProperty.error=error;
+        return;
+    }
 }
 
 -(void)createRecordQueue{
@@ -409,7 +414,9 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
         AudioStreamBasicDescription audioDesc=_audioProperty.audioDesc;
         OSStatus status=AudioQueueNewInput(&audioDesc,inputBufferHandler,(__bridge void *)(self),NULL, NULL,0, &audioQueue);
         if (status!=noErr) {
-            
+            NSError *error=[NSError errorWithDomain:@"AudioQueue Record init error" code:status userInfo:nil];
+            _audioProperty.error=error;
+            return;
         }
         
         UInt32 size = sizeof(audioDesc);
@@ -422,9 +429,15 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
             OSStatus status= AudioQueueAllocateBuffer(audioQueue, bufferSize, &audioQueueBuffer[i]);
             if (status==noErr) {
                 status=AudioQueueEnqueueBuffer(audioQueue, audioQueueBuffer[i], 0, NULL);
-                if (status==noErr){
-                    
+                if (status!=noErr){
+                    NSError *error=[NSError errorWithDomain:@"AudioQueue Record Enqueue buffer error" code:status userInfo:nil];
+                    _audioProperty.error=error;
+                    return;
                 }
+            }else{
+                NSError *error=[NSError errorWithDomain:@"AudioQueue Record buffer Alloc error" code:status userInfo:nil];
+                _audioProperty.error=error;
+                return;
             }
         }
     }
@@ -494,10 +507,19 @@ void inputBufferHandler(void *inUserData,AudioQueueRef inAQ,AudioQueueBufferRef 
 -(void)inputBuffer:(AudioQueueRef)inAQ inBuffer:(AudioQueueBufferRef)inBuffer inStartTime:(const AudioTimeStamp *)inStartTime inNumberPacketDescriptions:(UInt32)inNumberPacketDescriptions inPacketDescs:(const AudioStreamPacketDescription *)inPacketDescs{
     
     if (self.audioQueueDelegate) {
-        [self.audioQueueDelegate audioQueue_RecordPackets:inBuffer->mAudioDataByteSize inPacketDescs:inPacketDescs inStartingPacket:ioPacketNum ioNumPackets:&inNumberPacketDescriptions inBuffer:inBuffer->mAudioData];
+        NSError *error=[self.audioQueueDelegate audioQueue_RecordPackets:inBuffer->mAudioDataByteSize inPacketDescs:inPacketDescs inStartingPacket:ioPacketNum ioNumPackets:&inNumberPacketDescriptions inBuffer:inBuffer->mAudioData];
+        if (error) {
+            _audioProperty.error=error;
+            return;
+        }
         ioPacketNum+=inNumberPacketDescriptions;
     }
-    AudioQueueEnqueueBuffer(audioQueue, inBuffer, 0, NULL);
+    OSStatus status=AudioQueueEnqueueBuffer(audioQueue, inBuffer, 0, NULL);
+    if (status!=noErr) {
+        NSError *error=[NSError errorWithDomain:@"AudioQueue Record Enqueue buffer error" code:status userInfo:nil];
+        _audioProperty.error=error;
+        return;
+    }
 }
 
 - (void)dealloc
