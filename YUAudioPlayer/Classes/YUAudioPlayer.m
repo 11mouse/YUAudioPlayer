@@ -71,6 +71,9 @@
 -(void) playWithAudioData:(YUAudioDataBase*)audioData{
     if(!audioData){
         ///播放错误
+        if (self.audioPlayerDelegate) {
+            [self.audioPlayerDelegate audioPlayer_StateChanged:YUState_Stop error:[NSError errorWithDomain:@"audioData is nil" code:1 userInfo:nil]];
+        }
         return;
     }
     self.audioData=audioData;

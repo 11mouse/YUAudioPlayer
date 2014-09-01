@@ -28,6 +28,7 @@ typedef enum {
     UInt32 currBufferFillOffset;
     UInt32 currBufferPacketCount;
     NSCondition *conditionLock;
+    NSLock *lock;
     UInt32 bufferUseNum;
     BOOL isStart;
     BOOL isSeeking;
@@ -50,6 +51,7 @@ typedef enum {
     if (self) {
         self.audioDesc=audioDesc;
         conditionLock=[[NSCondition alloc] init];
+        lock=[[NSLock alloc] init];
         _seekTime=0;
         isStart=NO;
         isSeeking=NO;
@@ -318,39 +320,38 @@ typedef enum {
 }
 
 -(void)putBufferToQueue{
-    @synchronized(self)
-    {
-        if (userState==userPlay||userState==userInit) {
-            [self audioStart];
-        }
-        
-        AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
-        OSStatus status;
-        if (currBufferPacketCount>0) {
-            status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, currBufferPacketCount, bufferDescs);
-        }
-        else{
-            status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, 0, NULL);
-        }
-        if (status!=noErr)
-        {
-            NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer Enqueue error" code:status userInfo:nil];
-            _audioProperty.error=error;
-            return;
-        }
-        
-        bufferUseNum++;
-        bufferUserd[currBufferIndex]=true;
-        currBufferIndex++;
-        
-        if (currBufferIndex>=Num_Buffers) {
-            currBufferIndex=0;
-        }
-        
-        currBufferPacketCount=0;
-        currBufferFillOffset=0;
-        
+    [lock lock];
+    if (userState==userPlay||userState==userInit) {
+        [self audioStart];
     }
+    
+    AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
+    OSStatus status;
+    if (currBufferPacketCount>0) {
+        status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, currBufferPacketCount, bufferDescs);
+    }
+    else{
+        status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, 0, NULL);
+    }
+    if (status!=noErr)
+    {
+        NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer Enqueue error" code:status userInfo:nil];
+        _audioProperty.error=error;
+        [lock unlock];
+        return;
+    }
+    
+    bufferUseNum++;
+    bufferUserd[currBufferIndex]=true;
+    currBufferIndex++;
+    
+    if (currBufferIndex>=Num_Buffers) {
+        currBufferIndex=0;
+    }
+    
+    currBufferPacketCount=0;
+    currBufferFillOffset=0;
+    [lock unlock];
     [conditionLock lock];
     while (bufferUserd[currBufferIndex]) {
         [conditionLock wait];
@@ -367,7 +368,7 @@ void audioQueueOutputCallback (void *inUserData, AudioQueueRef inAQ, AudioQueueB
 
 -(void)audioQueueOutput:(AudioQueueRef)inAQ inBuffer:(AudioQueueBufferRef)inBuffer{
     
-    
+    [lock lock];
     NSInteger index=-1;
     for (NSInteger i=0;i<Num_Buffers;i++) {
         if (audioQueueBuffer[i]==inBuffer) {
@@ -384,14 +385,17 @@ void audioQueueOutputCallback (void *inUserData, AudioQueueRef inAQ, AudioQueueB
         }
     }
     if (index==-1) {
+        [lock unlock];
         return;
     }
     bufferUseNum--;
     [conditionLock lock];
     bufferUserd[index]=false;
-    
     [conditionLock signal];
     [conditionLock unlock];
+
+    [lock unlock];
+    
 }
 
 void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueuePropertyID inID)
