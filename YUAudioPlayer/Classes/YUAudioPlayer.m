@@ -150,7 +150,6 @@
 }
 
 -(void)audioData_Arrived:(NSData *)data contine:(BOOL)isContine{
-//    NSLog(@"收到:%lu",data.length);
     UInt32 flags=0;
     if (!isContine) {
         flags=kAudioFileStreamParseFlag_Discontinuity;

@@ -130,22 +130,30 @@ void packetsProc(void *inClientData,UInt32 inNumberBytes,UInt32	inNumberPackets,
          ignorableError = AudioFileStreamGetPropertyInfo(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, &writable);
          if (ignorableError)
          {
+             cookieSize=0;
+             _audioProperty.cookieSize=0;
+         }
+         if (cookieSize>0) {
+             void* cookieData = calloc(1, cookieSize);
+             ignorableError = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, cookieData);
+             if (ignorableError)
+             {
+                 
+             }
+             _audioProperty.magicData=cookieData;
+             _audioProperty.cookieSize=cookieSize;
              
-         }
-         void* cookieData = calloc(1, cookieSize);
-         ignorableError = AudioFileStreamGetProperty(_audioFileStreamID, kAudioFileStreamProperty_MagicCookieData, &cookieSize, cookieData);
-         if (ignorableError)
-         {
+             if (self.audioStreamDelegate) {
+                 [self.audioStreamDelegate audioStream_ReadyToProducePackets];
+             }
              
+             free(cookieData);
          }
-         _audioProperty.magicData=cookieData;
-         _audioProperty.cookieSize=cookieSize;
-         
-         if (self.audioStreamDelegate) {
-             [self.audioStreamDelegate audioStream_ReadyToProducePackets];
+         else{
+             if (self.audioStreamDelegate) {
+                 [self.audioStreamDelegate audioStream_ReadyToProducePackets];
+             }
          }
-         
-         free(cookieData);
      }
 }
 

@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-#define Num_Buffers 3
+#define Num_Buffers 16
 #define Num_Descs 512
 #define Size_DefaultBufferSize 2048
 

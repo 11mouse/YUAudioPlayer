@@ -27,7 +27,7 @@
 {
     self = [super init];
     if (self) {
-        readLength=2048;
+        readLength=4096;
         isContine=YES;
         newOffset=0;
     }
@@ -62,7 +62,7 @@
             currOffset=0;
             if (!fileTimer) {
                 NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
-                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(fileTimer_intval:) userInfo:nil repeats:YES];
+                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(fileTimer_intval:) userInfo:nil repeats:YES];
                 [runLoop run];
             }
         }

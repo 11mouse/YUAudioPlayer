@@ -66,6 +66,13 @@
     timer=[NSTimer scheduledTimerWithTimeInterval:0.5 target:self selector:@selector(timer_Interval) userInfo:nil repeats:YES];
 }
 
+-(void)viewWillDisappear:(BOOL)animated{
+    if (audioPlayer) {
+        [audioPlayer stop];
+        audioPlayer=nil;
+    }
+}
+
 -(void)audioPlayer_StateChanged:(YUAudioPlayerState)playerState error:(NSError*)error{
     NSMutableString *str=[NSMutableString string];
     if (playerState==YUState_Waiting) {
@@ -102,6 +109,9 @@
 }
 
 -(void)timer_Interval{
+    if (slider.highlighted) {
+        return;
+    }
     timeLabel.text=[NSString stringWithFormat:@"%f / %f",audioPlayer.currentTime,audioPlayer.duration];
     slider.maximumValue=audioPlayer.duration;
     slider.minimumValue=0;
@@ -136,7 +146,8 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/107182776/86772502165600128.mp3?xcode=39e03b86d8ea5981df41111f7de8452dba9e77bffa43fb3d&song_id=86772502";
+        //可能会失效
+        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/106150700/87902124216000128.mp3?xcode=15cbb482619e3ae70cd3a9aa850e5c1400c785754dda5eef&song_id=87902124";
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];

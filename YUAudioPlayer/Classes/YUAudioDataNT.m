@@ -70,10 +70,8 @@
         NSMutableURLRequest *newRequest=[NSMutableURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]];
         if (seekOffset>0) {
             [newRequest setValue:[NSString stringWithFormat:@"bytes=%llu-",seekOffset] forHTTPHeaderField:@"Range"];
-            seekOffset=0;
         }
         request=newRequest;
-//        request=[NSURLRequest requestWithURL:[NSURL URLWithString:self.urlStr]];
         connection=[[NSURLConnection alloc] initWithRequest:request delegate:self startImmediately:NO];
         [connection scheduleInRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
         
@@ -84,6 +82,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response{
     fileSize=seekOffset+response.expectedContentLength;
+    seekOffset=0;
     self.audioProperty.fileSize=fileSize;
 }
 

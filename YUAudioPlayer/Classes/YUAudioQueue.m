@@ -7,6 +7,7 @@
 //
 
 #import "YUAudioQueue.h"
+#import <AVFoundation/AVFoundation.h>
 
 typedef enum {
     userInit=0,
@@ -35,6 +36,7 @@ typedef enum {
     //recordmode parm
     BOOL isRecordMode;
     UInt32 ioPacketNum;
+    BOOL willStop;
 }
 @property(nonatomic) AudioStreamBasicDescription audioDesc;
 @end
@@ -54,6 +56,7 @@ typedef enum {
         _loadFinished=NO;
         userState=userInit;
         isRecordMode=NO;
+        willStop=NO;
     }
     return self;
 }
@@ -124,15 +127,21 @@ typedef enum {
 }
 
 -(void)audioStart{
-    if (!isStart){
-        OSStatus  status=AudioQueueStart(audioQueue, NULL);
-        if (status!=noErr)
-        {
-            NSError *error=[NSError errorWithDomain:@"AudioQueue Start Error" code:status userInfo:nil];
-            _audioProperty.error=error;
-            return;
+    @synchronized(self)
+    {
+        if (!isStart){
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+            
+            OSStatus  status=AudioQueueStart(audioQueue, NULL);
+            if (status!=noErr)
+            {
+                NSError *error=[NSError errorWithDomain:@"AudioQueue Start Error" code:status userInfo:nil];
+                _audioProperty.error=error;
+                return;
+            }
+            isStart=YES;
         }
-        isStart=YES;
     }
 }
 
@@ -143,33 +152,43 @@ typedef enum {
 }
 
 -(void)audioPause{
-    if (isStart){
-        OSStatus status= AudioQueuePause(audioQueue);
-        if (status!=noErr)
-        {
-            NSError *error=[NSError errorWithDomain:@"AudioQueue Pause Error" code:status userInfo:nil];
-            _audioProperty.error=error;
-            return;
+    if (willStop) {
+        return;
+    }
+    @synchronized(self)
+    {
+        if (isStart){
+            OSStatus status= AudioQueuePause(audioQueue);
+            if (status!=noErr)
+            {
+                NSError *error=[NSError errorWithDomain:@"AudioQueue Pause Error" code:status userInfo:nil];
+                _audioProperty.error=error;
+                return;
+            }
+            isStart=NO;
         }
-        isStart=NO;
     }
 }
 
 -(void)stop{
     _audioProperty.state=YUState_Stop;
     userState=userStop;
+    willStop=YES;
     [self audioStop];
     [self cleanUp];
 }
 
 -(void)audioStop{
-    isStart=NO;
-    OSStatus status= AudioQueueStop(audioQueue, true);
-    if (status!=noErr)
+    @synchronized(self)
     {
-        NSError *error=[NSError errorWithDomain:@"AudioQueue stop error" code:status userInfo:nil];
-        _audioProperty.error=error;
-        return;
+        isStart=NO;
+        OSStatus status= AudioQueueStop(audioQueue, true);
+        if (status!=noErr)
+        {
+            NSError *error=[NSError errorWithDomain:@"AudioQueue stop error" code:status userInfo:nil];
+            _audioProperty.error=error;
+            return;
+        }
     }
 }
 
@@ -187,25 +206,20 @@ typedef enum {
 -(void)setSeekTime:(double)seekTime{
     _seekTime=seekTime;
     isSeeking=YES;
-    [conditionLock lock];
-    [conditionLock signal];
-    [conditionLock unlock];
-    AudioQueueReset(audioQueue);
+    isStart=NO;
+    AudioQueueStop(audioQueue, true);
 }
 
 -(void)seeked
 {
-    isSeeking=NO;
-    [conditionLock lock];
-    for (NSInteger i=0;i<Num_Buffers;i++) {
-        bufferUserd[i]=false;
+    @synchronized(self)
+    {
+        isSeeking=NO;
+        currBufferPacketCount=0;
+        currBufferFillOffset=0;
+        bufferUseNum=0;
+        currBufferIndex=0;
     }
-    currBufferPacketCount=0;
-    currBufferFillOffset=0;
-    bufferUseNum=0;
-    currBufferIndex=0;
-    [conditionLock signal];
-    [conditionLock unlock];
 }
 
 -(void)cleanUp{
@@ -228,6 +242,9 @@ typedef enum {
 }
 
 #define mark 播放: 缓冲区加入队列及播放结束
+
+ void ASAudioSessionInterruptionListener(__unused void * inClientData, UInt32 inInterruptionState) {
+ }
 
 -(void)enqueueBuffer:(NSData *)data packetNum:(UInt32)packetCount packetDescs:(AudioStreamPacketDescription *)inPacketDescs{
     if (inPacketDescs) {
@@ -301,38 +318,40 @@ typedef enum {
 }
 
 -(void)putBufferToQueue{
-    if (userState==userPlay||userState==userInit) {
-        [self audioStart];
-    }
-    
-    AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
-     OSStatus status;
-    if (currBufferPacketCount>0) {
-        status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, currBufferPacketCount, bufferDescs);
-    }
-    else{
-        status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, 0, NULL);
-    }
-    if (status!=noErr)
+    @synchronized(self)
     {
-        NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer Enqueue error" code:status userInfo:nil];
-        _audioProperty.error=error;
-//        [conditionLock signal];
-//        [conditionLock unlock];
-        return;
+        if (userState==userPlay||userState==userInit) {
+            [self audioStart];
+        }
+        
+        AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
+        OSStatus status;
+        if (currBufferPacketCount>0) {
+            status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, currBufferPacketCount, bufferDescs);
+        }
+        else{
+            status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, 0, NULL);
+        }
+        if (status!=noErr)
+        {
+            NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer Enqueue error" code:status userInfo:nil];
+            _audioProperty.error=error;
+            return;
+        }
+        
+        bufferUseNum++;
+        bufferUserd[currBufferIndex]=true;
+        currBufferIndex++;
+        
+        if (currBufferIndex>=Num_Buffers) {
+            currBufferIndex=0;
+        }
+        
+        currBufferPacketCount=0;
+        currBufferFillOffset=0;
+        
     }
     [conditionLock lock];
-    bufferUseNum++;
-   bufferUserd[currBufferIndex]=true;
-    currBufferIndex++;
-    
-    if (currBufferIndex>=Num_Buffers) {
-        currBufferIndex=0;
-    }
-    
-    currBufferPacketCount=0;
-    currBufferFillOffset=0;
-    
     while (bufferUserd[currBufferIndex]) {
         [conditionLock wait];
     }
@@ -348,7 +367,7 @@ void audioQueueOutputCallback (void *inUserData, AudioQueueRef inAQ, AudioQueueB
 
 -(void)audioQueueOutput:(AudioQueueRef)inAQ inBuffer:(AudioQueueBufferRef)inBuffer{
     
-     [conditionLock lock];
+    
     NSInteger index=-1;
     for (NSInteger i=0;i<Num_Buffers;i++) {
         if (audioQueueBuffer[i]==inBuffer) {
@@ -364,16 +383,13 @@ void audioQueueOutputCallback (void *inUserData, AudioQueueRef inAQ, AudioQueueB
             [self audioPause];
         }
     }
-    
     if (index==-1) {
-        [conditionLock signal];
-        [conditionLock unlock];
         return;
     }
-    
-    
-    bufferUserd[index]=false;
     bufferUseNum--;
+    [conditionLock lock];
+    bufferUserd[index]=false;
+    
     [conditionLock signal];
     [conditionLock unlock];
 }
@@ -468,35 +484,6 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
         free(cookieData);
     }
 }
-
-
--(UInt32)recordBufferSize
-{
-    UInt32 packets, frames, bytes = 0;
-    frames = (UInt32)ceil(Dur_RecordBuffer * _audioProperty.audioDesc.mSampleRate);
-    
-    if (_audioProperty.audioDesc.mBytesPerFrame > 0)
-        bytes = frames * _audioProperty.audioDesc.mBytesPerFrame;
-    else {
-        UInt32 maxPacketSize;
-        if (_audioProperty.audioDesc.mBytesPerPacket > 0)
-            maxPacketSize = _audioProperty.audioDesc.mBytesPerPacket;
-        else {
-            UInt32 propertySize = sizeof(maxPacketSize);
-            AudioQueueGetProperty(audioQueue, kAudioQueueProperty_MaximumOutputPacketSize, &maxPacketSize,
-                                  &propertySize);
-        }
-        if (_audioProperty.audioDesc.mFramesPerPacket > 0)
-            packets = frames / _audioProperty.audioDesc.mFramesPerPacket;
-        else
-            packets = frames;
-        if (packets == 0)
-            packets = 1;
-        bytes = packets * maxPacketSize;
-    }
-    return bytes;
-}
-
 
 void inputBufferHandler(void *inUserData,AudioQueueRef inAQ,AudioQueueBufferRef inBuffer,const AudioTimeStamp *          inStartTime,UInt32 inNumberPacketDescriptions,const AudioStreamPacketDescription *inPacketDescs)
 {
