@@ -8,16 +8,39 @@
 
 #import "YUAudioProperty.h"
 
+@interface YUAudioProperty(){
+    NSDictionary *errorDic;
+}
+@end
+
 @implementation YUAudioProperty
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
+        _state=YUAudioState_Init;
         _fileSize=0;
         _packetMaxSize=0;
+        errorDic=[[NSDictionary alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"YUAudioError" ofType:@"plist"]];
     }
     return self;
+}
+
+-(void)error:(YUAudioError)errorType{
+    if (!errorDic&&![errorDic objectForKey:[NSString stringWithFormat:@"%d",errorType]]) {
+        self.error=[NSError errorWithDomain:@"no desc" code:errorType userInfo:nil];
+    }else{
+        self.error=[NSError errorWithDomain:[errorDic objectForKey:[NSString stringWithFormat:@"%d",errorType]] code:errorType userInfo:nil];
+    }
+}
+
+-(NSString*)errorDomaim:(YUAudioError)errorType{
+    if (!errorDic&&![errorDic objectForKey:[NSString stringWithFormat:@"%d",errorType]]) {
+        return @"";
+    }else{
+        return [errorDic objectForKey:[NSString stringWithFormat:@"%d",errorType]];
+    }
 }
 
 @end

@@ -80,8 +80,7 @@ typedef enum {
     if(!audioQueue){
         OSStatus status = AudioQueueNewOutput (&_audioDesc,audioQueueOutputCallback,(__bridge void *)(self),NULL,NULL,0,&audioQueue);
         if (status!=noErr) {
-             NSError *error=[NSError errorWithDomain:@"AudioQueue init error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AQ_InitFail];
             return;
         }
         AudioQueueAddPropertyListener(audioQueue, kAudioQueueProperty_IsRunning, audioQueueIsRunningCallback, (__bridge void *)(self));
@@ -110,8 +109,7 @@ typedef enum {
         OSStatus status = AudioQueueAllocateBuffer(audioQueue, bufferSize, &audioQueueBuffer[i]);
         if (status!=noErr)
         {
-            NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer alloc Error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AQB_AllocFail];
             return;
         }
     }
@@ -120,7 +118,7 @@ typedef enum {
 #pragma mark 播放: 开始 暂停 停止
 
 -(void)start{
-    _audioProperty.state=YUState_Playing;
+    _audioProperty.state=YUAudioState_Playing;
     if (!audioQueue) {
         [self createQueue];
     }
@@ -138,8 +136,7 @@ typedef enum {
             OSStatus  status=AudioQueueStart(audioQueue, NULL);
             if (status!=noErr)
             {
-                NSError *error=[NSError errorWithDomain:@"AudioQueue Start Error" code:status userInfo:nil];
-                _audioProperty.error=error;
+                [self.audioProperty error:YUAudioError_AQ_StartFail];
                 return;
             }
             isStart=YES;
@@ -148,7 +145,7 @@ typedef enum {
 }
 
 -(void)pause{
-    _audioProperty.state=YUState_Paused;
+    _audioProperty.state=YUAudioState_Paused;
     userState=userPause;
     [self audioPause];
 }
@@ -163,8 +160,7 @@ typedef enum {
             OSStatus status= AudioQueuePause(audioQueue);
             if (status!=noErr)
             {
-                NSError *error=[NSError errorWithDomain:@"AudioQueue Pause Error" code:status userInfo:nil];
-                _audioProperty.error=error;
+                [self.audioProperty error:YUAudioError_AQ_PauseFail];
                 return;
             }
             isStart=NO;
@@ -173,7 +169,7 @@ typedef enum {
 }
 
 -(void)stop{
-    _audioProperty.state=YUState_Stop;
+    _audioProperty.state=YUAudioState_Stop;
     userState=userStop;
     willStop=YES;
     [self audioStop];
@@ -187,8 +183,7 @@ typedef enum {
         OSStatus status= AudioQueueStop(audioQueue, true);
         if (status!=noErr)
         {
-            NSError *error=[NSError errorWithDomain:@"AudioQueue stop error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AQ_StopFail];
             return;
         }
     }
@@ -261,7 +256,7 @@ typedef enum {
             if (isSeeking) {
                 return;
             }
-            if (_audioProperty.state==YUState_Stop) {
+            if (_audioProperty.state==YUAudioState_Stop) {
                 return;
             }
             AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
@@ -290,7 +285,7 @@ typedef enum {
                 if (isSeeking) {
                     return;
                 }
-                if (_audioProperty.state==YUState_Stop) {
+                if (_audioProperty.state==YUAudioState_Stop) {
                     return;
                 }
                 
@@ -327,6 +322,7 @@ typedef enum {
     
     AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
     OSStatus status;
+    
     if (currBufferPacketCount>0) {
         status=AudioQueueEnqueueBuffer(audioQueue, outBufferRef, currBufferPacketCount, bufferDescs);
     }
@@ -335,8 +331,7 @@ typedef enum {
     }
     if (status!=noErr)
     {
-        NSError *error=[NSError errorWithDomain:@"AudioQueueBuffer Enqueue error" code:status userInfo:nil];
-        _audioProperty.error=error;
+        [self.audioProperty error:YUAudioError_AQB_EnqueueFail];
         [lock unlock];
         return;
     }
@@ -423,8 +418,7 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
     ioPacketNum=0;
     OSStatus status=AudioQueueStart(audioQueue, NULL);
     if (status!=noErr) {
-        NSError *error=[NSError errorWithDomain:@"AudioQueue Record Start error" code:status userInfo:nil];
-        _audioProperty.error=error;
+        [self.audioProperty error:YUAudioError_AQR_StartFail];
         return;
     }
 }
@@ -434,8 +428,7 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
         AudioStreamBasicDescription audioDesc=_audioProperty.audioDesc;
         OSStatus status=AudioQueueNewInput(&audioDesc,inputBufferHandler,(__bridge void *)(self),NULL, NULL,0, &audioQueue);
         if (status!=noErr) {
-            NSError *error=[NSError errorWithDomain:@"AudioQueue Record init error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AQR_InitFail];
             return;
         }
         
@@ -450,13 +443,11 @@ void audioQueueIsRunningCallback(void *inUserData, AudioQueueRef inAQ, AudioQueu
             if (status==noErr) {
                 status=AudioQueueEnqueueBuffer(audioQueue, audioQueueBuffer[i], 0, NULL);
                 if (status!=noErr){
-                    NSError *error=[NSError errorWithDomain:@"AudioQueue Record Enqueue buffer error" code:status userInfo:nil];
-                    _audioProperty.error=error;
+                    [self.audioProperty error:YUAudioError_AQB_EnqueueFail];
                     return;
                 }
             }else{
-                NSError *error=[NSError errorWithDomain:@"AudioQueue Record buffer Alloc error" code:status userInfo:nil];
-                _audioProperty.error=error;
+                [self.audioProperty error:YUAudioError_AQB_AllocFail];
                 return;
             }
         }
@@ -507,8 +498,7 @@ void inputBufferHandler(void *inUserData,AudioQueueRef inAQ,AudioQueueBufferRef 
     }
     OSStatus status=AudioQueueEnqueueBuffer(audioQueue, inBuffer, 0, NULL);
     if (status!=noErr) {
-        NSError *error=[NSError errorWithDomain:@"AudioQueue Record Enqueue buffer error" code:status userInfo:nil];
-        _audioProperty.error=error;
+        [self.audioProperty error:YUAudioError_AQB_EnqueueFail];
         return;
     }
 }

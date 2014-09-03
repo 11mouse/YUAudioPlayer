@@ -33,8 +33,7 @@
         OSStatus status = AudioFileCreateWithURL(url, kAudioFileCAFType, &audioDesc, kAudioFileFlags_EraseFile, &audioFileID);
         CFRelease(url);
         if (status!=noErr) {
-            NSError *error=[NSError errorWithDomain:@"AudioFile Create error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AF_CreateFail];
         }
     }
 }
@@ -47,7 +46,7 @@
                           inPacketDescs, inStartingPacket, ioNumPackets, inBuffer);
     NSError *error=nil;
     if (status!=noErr) {
-        error=[NSError errorWithDomain:@"packets write error" code:status userInfo:nil];
+        error=[NSError errorWithDomain:[self.audioProperty errorDomaim:YUAudioError_AF_PacketWriteFail] code:YUAudioError_AF_PacketWriteFail userInfo:nil];
     }
     return error;
 }

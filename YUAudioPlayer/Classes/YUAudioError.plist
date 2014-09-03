@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>0</key>
+	<string>no error</string>
+	<key>1</key>
+	<string>audiodata is nil</string>
+	<key>2</key>
+	<string>audioQueue init fail</string>
+	<key>3</key>
+	<string>audioQueueBuffer alloc fail</string>
+	<key>4</key>
+	<string>audioQueue Start fail</string>
+	<key>5</key>
+	<string>audioQueue Pause fail</string>
+	<key>6</key>
+	<string>audioQueue Stop fail</string>
+	<key>7</key>
+	<string>audioQueueBuffer Enqueue fail</string>
+	<key>8</key>
+	<string>audioQueue Record Start fail</string>
+	<key>9</key>
+	<string>audioQueue Record init fail</string>
+	<key>10</key>
+	<string>audioQueue Record Enqueue Buffer fail</string>
+	<key>11</key>
+	<string>audioFileStream open fail</string>
+	<key>12</key>
+	<string>audioFileStream parse fail</string>
+	<key>13</key>
+	<string>audioFile Create fail</string>
+	<key>14</key>
+	<string>packets write fail</string>
+	<key>99</key>
+	<string>audioData custom error</string>
+</dict>
+</plist>

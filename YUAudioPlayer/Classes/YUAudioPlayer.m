@@ -71,16 +71,14 @@
 -(void) playWithAudioData:(YUAudioDataBase*)audioData{
     if(!audioData){
         ///播放错误
-        if (self.audioPlayerDelegate) {
-            [self.audioPlayerDelegate audioPlayer_StateChanged:YUState_Stop error:[NSError errorWithDomain:@"audioData is nil" code:1 userInfo:nil]];
-        }
+        [self.audioProperty error:YUAudioError_AD_Nil];
         return;
     }
     self.audioData=audioData;
     self.audioData.audioProperty=self.audioProperty;
     self.audioData.audioDataDelegate=self;
     [self.audioData start];
-    _audioProperty.state=YUState_Waiting;
+    _audioProperty.state=YUAudioState_Waiting;
 }
 
 -(void)play{
@@ -98,6 +96,9 @@
 -(void)stop{
     if (_audioQueue) {
         [_audioQueue stop];
+    }
+    else{
+        _audioProperty.state=YUAudioState_Stop;
     }
     if (_audioData) {
         _audioData.audioDataDelegate=nil;

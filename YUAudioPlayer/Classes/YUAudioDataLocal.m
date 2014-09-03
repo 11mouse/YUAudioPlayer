@@ -12,11 +12,11 @@
 {
     NSFileHandle *filehandle;
     NSInteger readLength;
-    long fileSize;
-    long currOffset;
+    UInt64 fileSize;
+    UInt64 currOffset;
     NSTimer *fileTimer;
     BOOL isContine;
-    long newOffset;
+    UInt64 newOffset;
 }
 
 @end
@@ -68,8 +68,7 @@
         }
     }
     else{
-        NSError *error=[NSError errorWithDomain:@"AudioDataLocal not exists" code:1 userInfo:nil];
-        self.audioProperty.error=error;
+        [self audioDataError:@"file not exists" userInfo:nil];
     }
 }
 
@@ -92,7 +91,7 @@
     if (newOffset>0) {
         currOffset=newOffset;
     }
-    long currReadLength=readLength;
+    UInt64 currReadLength=readLength;
     if (currOffset+readLength>fileSize) {
         currReadLength=fileSize-currOffset;
     }
@@ -100,7 +99,7 @@
         [filehandle seekToFileOffset:newOffset];
         newOffset=0;
     }
-    NSData* data=[filehandle readDataOfLength:currReadLength];
+    NSData* data=[filehandle readDataOfLength:(NSUInteger)currReadLength];
     if (self.audioDataDelegate&&fileTimer) {
         [self.audioDataDelegate audioData_Arrived:data contine:isContine];
     }

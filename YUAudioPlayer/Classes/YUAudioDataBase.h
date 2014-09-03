@@ -29,4 +29,6 @@
 -(void)seekToOffset:(UInt64)offset;
 
 - (AudioFileTypeID)hintForFileExtension:(NSString *)fileExtension;
+
+-(void)audioDataError:(NSString*)errorDomain userInfo:(NSDictionary*)userInfo;
 @end

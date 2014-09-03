@@ -75,22 +75,22 @@
 
 -(void)audioPlayer_StateChanged:(YUAudioPlayerState)playerState error:(NSError*)error{
     NSMutableString *str=[NSMutableString string];
-    if (playerState==YUState_Waiting) {
+    if (playerState==YUAudioState_Waiting) {
         [str appendString:@"缓冲"];
         [playBtn setTitle:@"" forState:UIControlStateNormal];
         playBtn.enabled=NO;
     }
-    if (playerState==YUState_Paused) {
+    if (playerState==YUAudioState_Paused) {
         [str appendString:@"暂停"];
         [playBtn setTitle:@"播放" forState:UIControlStateNormal];
         playBtn.enabled=YES;
     }
-    if (playerState==YUState_Playing) {
+    if (playerState==YUAudioState_Playing) {
         [str appendString:@"播放"];
         [playBtn setTitle:@"暂停" forState:UIControlStateNormal];
         playBtn.enabled=YES;
     }
-    if (playerState==YUState_Stop) {
+    if (playerState==YUAudioState_Stop) {
         [str appendString:@"停止"];
         [playBtn setTitle:@"" forState:UIControlStateNormal];
         playBtn.enabled=NO;
@@ -119,10 +119,10 @@
 }
 
 -(void)btnPause_Events{
-    if (audioPlayer&&audioPlayer.state==YUState_Playing) {
+    if (audioPlayer&&audioPlayer.state==YUAudioState_Playing) {
         [audioPlayer pause];
     }else
-    if (audioPlayer&&audioPlayer.state==YUState_Paused) {
+    if (audioPlayer&&audioPlayer.state==YUAudioState_Paused) {
         [audioPlayer play];
     }
 }
@@ -133,7 +133,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"clg" ofType:@"m4a"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];

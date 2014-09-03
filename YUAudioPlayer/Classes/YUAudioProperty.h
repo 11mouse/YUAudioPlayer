@@ -9,19 +9,40 @@
 #import <Foundation/Foundation.h>
 #import <AudioToolbox/AudioToolbox.h>
 
-#define Num_Buffers 16
-#define Num_Descs 512
-#define Size_DefaultBufferSize 2048
+#define Num_Buffers 16 //缓冲区数量
+#define Num_Descs 512 //复用的包描述数量
+#define Size_DefaultBufferSize 2048 //默认缓冲区大小
 
-#define Dur_RecordBuffer 0.5
-#define Size_RecordBufferSize 2048
+#define Dur_RecordBuffer 0.5 //录音每次时间
+#define Size_RecordBufferSize 2048 //录音缓冲区默认大小
 
 typedef enum{
-    YUState_Waiting=0,
-    YUState_Playing,
-    YUState_Paused,
-    YUState_Stop
+    YUAudioState_Init=0,
+    YUAudioState_Waiting,
+    YUAudioState_Playing,
+    YUAudioState_Paused,
+    YUAudioState_Stop
 }YUAudioPlayerState;
+
+typedef enum{
+    YUAudioError_noErr=0,
+    YUAudioError_AD_Nil,
+    YUAudioError_AQ_InitFail,
+    YUAudioError_AQB_AllocFail,
+    YUAudioError_AQ_StartFail,
+    YUAudioError_AQ_PauseFail,
+    YUAudioError_AQ_StopFail,
+    YUAudioError_AQB_EnqueueFail,
+    YUAudioError_AQR_StartFail,
+    YUAudioError_AQR_InitFail,
+    YUAudioError_AQR_EnqueueBufferFail,
+    YUAudioError_AFS_OpenFail,
+    YUAudioError_AFS_ParseFail,
+    YUAudioError_AF_CreateFail,
+    YUAudioError_AF_PacketWriteFail,
+    YUAudioError_AD_CustomError
+}YUAudioError;//AD:AudioData; AQ:AudioQueue; AQB:AudioQueue Buffer;
+//AQR:AQB:AudioQueue Record; AFS:AudioFileStream; AF:AudioFile
 
 typedef enum{
     YUFormat_PCM= 'lpcm',
@@ -46,5 +67,8 @@ typedef struct YURecordFormat{
 @property(nonatomic,retain) NSError* error;
 
 @property(nonatomic) AudioStreamBasicDescription audioDesc;
+
+-(void)error:(YUAudioError)errorType;
+-(NSString*)errorDomaim:(YUAudioError)errorType;
 
 @end

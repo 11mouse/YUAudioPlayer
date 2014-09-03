@@ -38,8 +38,7 @@
         OSStatus status= AudioFileStreamOpen((__bridge void *)(self), propertyListenerProc, packetsProc, fileTypeID, &_audioFileStreamID);
         if (status!=noErr)
         {
-            NSError *error=[NSError errorWithDomain:@"AudioFileStream open error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AFS_OpenFail];
         }
     }
     return self;
@@ -50,8 +49,7 @@
         OSStatus status= AudioFileStreamParseBytes(_audioFileStreamID, (UInt32)data.length, data.bytes, flags);;
         if (status!=noErr)
         {
-            NSError *error=[NSError errorWithDomain:@"AudioFileStream parse error" code:status userInfo:nil];
-            _audioProperty.error=error;
+            [self.audioProperty error:YUAudioError_AFS_ParseFail];
         }
     }
 }

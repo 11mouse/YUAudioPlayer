@@ -23,6 +23,10 @@
     
 }
 
+-(void)audioDataError:(NSString*)errorDomain userInfo:(NSDictionary*)userInfo{
+    self.audioProperty.error=[NSError errorWithDomain:errorDomain code:YUAudioError_AD_CustomError userInfo:userInfo];
+}
+
 - (AudioFileTypeID)hintForFileExtension:(NSString *)fileExtension
 {
     AudioFileTypeID fileTypeHint = kAudioFileAAC_ADTSType;

@@ -96,7 +96,7 @@
 }
 
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error{
-    self.audioProperty.error=error;
+    [self audioDataError:@"connect fail" userInfo:nil];
 }
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{

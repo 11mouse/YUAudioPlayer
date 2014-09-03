@@ -11,6 +11,7 @@
 		0B5450E919AB1FE40002B2C8 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450E819AB1FE40002B2C8 /* RecordViewController.m */; };
 		0B5450EC19AB27430002B2C8 /* YUAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450EB19AB27430002B2C8 /* YUAudioRecorder.m */; };
 		0B5450EF19AB2C840002B2C8 /* YUAudioFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450EE19AB2C840002B2C8 /* YUAudioFile.m */; };
+		0B5E6E3B19B6E43500F62F5B /* YUAudioError.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0B5E6E3A19B6E43500F62F5B /* YUAudioError.plist */; };
 		0B6237A319B1785D00CD2D49 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6237A219B1785D00CD2D49 /* AVFoundation.framework */; };
 		0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B68995919A5D1F60067749D /* YUAudioProperty.m */; };
 		0B7976D519ADC5620003FD39 /* RecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7976D419ADC5620003FD39 /* RecordListViewController.m */; };
@@ -49,6 +50,7 @@
 		0B5450EB19AB27430002B2C8 /* YUAudioRecorder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioRecorder.m; sourceTree = "<group>"; };
 		0B5450ED19AB2C840002B2C8 /* YUAudioFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioFile.h; sourceTree = "<group>"; };
 		0B5450EE19AB2C840002B2C8 /* YUAudioFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioFile.m; sourceTree = "<group>"; };
+		0B5E6E3A19B6E43500F62F5B /* YUAudioError.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = YUAudioError.plist; sourceTree = "<group>"; };
 		0B6237A219B1785D00CD2D49 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		0B68995819A5D1F60067749D /* YUAudioProperty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioProperty.h; sourceTree = "<group>"; };
 		0B68995919A5D1F60067749D /* YUAudioProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioProperty.m; sourceTree = "<group>"; };
@@ -191,6 +193,7 @@
 				0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */,
 				0B68995819A5D1F60067749D /* YUAudioProperty.h */,
 				0B68995919A5D1F60067749D /* YUAudioProperty.m */,
+				0B5E6E3A19B6E43500F62F5B /* YUAudioError.plist */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -279,6 +282,7 @@
 			files = (
 				0BB0296219B07FE00002C9CA /* clg.m4a in Resources */,
 				0BCE137019A1DC260093E91F /* Images.xcassets in Resources */,
+				0B5E6E3B19B6E43500F62F5B /* YUAudioError.plist in Resources */,
 				0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
