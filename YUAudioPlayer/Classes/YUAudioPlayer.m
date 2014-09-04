@@ -12,7 +12,7 @@
 #import "YUAudioQueue.h"
 #import "YUAudioStream.h"
 
-@interface YUAudioPlayer()<YUAudioDataDelegate,YUAudioStreamDelegate>{
+@interface YUAudioPlayer()<YUAudioDataDelegate,YUAudioStreamDelegate,YUAudioPropertyDelegate>{
     
 }
 @property(nonatomic,retain) YUAudioDataBase *audioData;
@@ -28,31 +28,12 @@
     self = [super init];
     if (self) {
         self.audioProperty=[[YUAudioProperty alloc] init];
-        [self addObserver:self forKeyPath:@"audioProperty.state" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
-        [self addObserver:self forKeyPath:@"audioProperty.error" options:NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld context:NULL];
+        self.audioProperty.audioPropertyDelegate=self;
     }
     return self;
 }
 
--(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-    if([keyPath isEqualToString:@"audioProperty.state"])
-    {
-        if (self.audioPlayerDelegate) {
-            [self.audioPlayerDelegate audioPlayer_StateChanged:_audioProperty.state error:_audioProperty.error];
-            if (_audioProperty.error) {
-                _audioProperty.error=nil;
-            }
-        }
-    }
-    if([keyPath isEqualToString:@"audioProperty.error"])
-    {
-        if (_audioProperty.error) {
-            [self performSelectorOnMainThread:@selector(stop) withObject:nil waitUntilDone:NO];
-        }
-        
-    }
-}
+
 
 #pragma mark Play Pause Stop
 
@@ -143,6 +124,23 @@
     return _audioProperty.state;
 }
 
+#pragma mark YUAudioPropertyDelegate
+
+-(void)audioProperty_Error:(NSError *)error{
+    if (_audioProperty.error) {
+        [self performSelectorOnMainThread:@selector(stop) withObject:nil waitUntilDone:NO];
+    }
+}
+
+-(void)audioProperty_StateChanged:(YUAudioPlayerState)state{
+    if (self.audioPlayerDelegate) {
+        [self.audioPlayerDelegate audioPlayer_StateChanged:_audioProperty.state error:_audioProperty.error];
+        if (_audioProperty.error) {
+            _audioProperty.error=nil;
+        }
+    }
+}
+
 #pragma mark YUAudioDataDelegate
 
 -(void)audioData_FileType:(AudioFileTypeID)fileTypeHint{
@@ -187,8 +185,7 @@
 
 - (void)dealloc
 {
-    [self removeObserver:self forKeyPath:@"audioProperty.state"];
-    [self removeObserver:self forKeyPath:@"audioProperty.error"];
+    
 }
 
 @end

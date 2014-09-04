@@ -57,6 +57,13 @@ typedef struct YURecordFormat{
     UInt32              mChannelsPerFrame;
 }YURecordFormat;
 
+@protocol YUAudioPropertyDelegate <NSObject>
+
+-(void)audioProperty_Error:(NSError*)error;
+-(void)audioProperty_StateChanged:(YUAudioPlayerState)state;
+
+@end
+
 @interface YUAudioProperty : NSObject
 
 @property(nonatomic) UInt64 fileSize;
@@ -65,7 +72,7 @@ typedef struct YURecordFormat{
 @property(nonatomic) UInt32 cookieSize;
 @property(nonatomic) YUAudioPlayerState state;
 @property(nonatomic,retain) NSError* error;
-
+@property(nonatomic) id<YUAudioPropertyDelegate> audioPropertyDelegate;
 @property(nonatomic) AudioStreamBasicDescription audioDesc;
 
 -(void)error:(YUAudioError)errorType;

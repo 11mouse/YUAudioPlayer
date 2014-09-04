@@ -38,6 +38,7 @@ typedef enum {
     BOOL isRecordMode;
     UInt32 ioPacketNum;
     BOOL willStop;
+    BOOL waitBuffer;
 }
 @property(nonatomic) AudioStreamBasicDescription audioDesc;
 @end
@@ -59,6 +60,7 @@ typedef enum {
         userState=userInit;
         isRecordMode=NO;
         willStop=NO;
+        waitBuffer=YES;
     }
     return self;
 }
@@ -118,20 +120,19 @@ typedef enum {
 #pragma mark 播放: 开始 暂停 停止
 
 -(void)start{
-    _audioProperty.state=YUAudioState_Playing;
+    _audioProperty.state=YUAudioState_Waiting;
     if (!audioQueue) {
         [self createQueue];
     }
     userState=userPlay;
-    [self audioStart];
+//    [self audioStart];
 }
 
 -(void)audioStart{
     @synchronized(self)
     {
         if (!isStart){
-            [[AVAudioSession sharedInstance] setActive:YES error:nil];
-            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+            
             
             OSStatus  status=AudioQueueStart(audioQueue, NULL);
             if (status!=noErr)
@@ -139,6 +140,8 @@ typedef enum {
                 [self.audioProperty error:YUAudioError_AQ_StartFail];
                 return;
             }
+            [[AVAudioSession sharedInstance] setActive:YES error:nil];
+            [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
             isStart=YES;
         }
     }
@@ -204,6 +207,7 @@ typedef enum {
     _seekTime=seekTime;
     isSeeking=YES;
     isStart=NO;
+    waitBuffer=YES;
     AudioQueueStop(audioQueue, true);
 }
 
@@ -316,9 +320,10 @@ typedef enum {
 
 -(void)putBufferToQueue{
     [lock lock];
-    if (userState==userPlay||userState==userInit) {
-        [self audioStart];
-    }
+//    if ((userState==userPlay||userState==userInit)&&!isSeeking) {
+//        [self audioStart];
+//    }
+    
     
     AudioQueueBufferRef outBufferRef=audioQueueBuffer[currBufferIndex];
     OSStatus status;
@@ -335,8 +340,25 @@ typedef enum {
         [lock unlock];
         return;
     }
-    
     bufferUseNum++;
+    if (waitBuffer&&bufferUseNum==Num_Buffers-1&&!isStart) {
+        _audioProperty.state=YUAudioState_Playing;
+        waitBuffer=NO;
+        OSStatus  status=AudioQueueStart(audioQueue, NULL);
+        if (status!=noErr)
+        {
+            [lock unlock];
+            [self.audioProperty error:YUAudioError_AQ_StartFail];
+            
+            return;
+        }
+        isStart=YES;
+        [[AVAudioSession sharedInstance] setActive:YES error:nil];
+        [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:nil];
+    }
+    
+    
+    
     bufferUserd[currBufferIndex]=true;
     currBufferIndex++;
     
@@ -376,7 +398,7 @@ void audioQueueOutputCallback (void *inUserData, AudioQueueRef inAQ, AudioQueueB
             [self audioStop];
             [self cleanUp];
         }else{
-            [self audioPause];
+            waitBuffer=YES;
         }
     }
     if (index==-1) {

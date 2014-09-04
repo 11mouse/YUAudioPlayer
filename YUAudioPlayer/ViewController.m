@@ -147,7 +147,7 @@
     }
     if (!audioPlayer) {
         //可能会失效
-        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/106150700/87902124216000128.mp3?xcode=15cbb482619e3ae70cd3a9aa850e5c1400c785754dda5eef&song_id=87902124";
+        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/118441320/4015334072000128.mp3?xcode=5a32c2120b9813b1fd94edcfc8196ff7d29841a6c59fa3b7&song_id=40153340";
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
