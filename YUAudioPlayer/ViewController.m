@@ -71,6 +71,10 @@
         [audioPlayer stop];
         audioPlayer=nil;
     }
+    if (timer) {
+        [timer invalidate];
+        timer=nil;
+    }
 }
 
 -(void)audioPlayer_StateChanged:(YUAudioPlayerState)playerState error:(NSError*)error{
@@ -133,6 +137,7 @@
         audioPlayer=nil;
     }
     if (!audioPlayer) {
+//        NSString *path=[[NSBundle mainBundle] pathForResource:@"20140827170401" ofType:@"pcm"];
         NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
@@ -159,6 +164,11 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)dealloc
+{
+    
 }
 
 @end

@@ -120,20 +120,21 @@ typedef enum {
 #pragma mark 播放: 开始 暂停 停止
 
 -(void)start{
-    _audioProperty.state=YUAudioState_Waiting;
-    if (!audioQueue) {
-        [self createQueue];
+    if (_audioProperty.state==YUAudioState_Paused) {
+        _audioProperty.state=YUAudioState_Playing;
     }
+    else{
+        _audioProperty.state=YUAudioState_Waiting;
+    }
+    
     userState=userPlay;
-//    [self audioStart];
+    [self audioStart];
 }
 
 -(void)audioStart{
     @synchronized(self)
     {
         if (!isStart){
-            
-            
             OSStatus  status=AudioQueueStart(audioQueue, NULL);
             if (status!=noErr)
             {
@@ -248,6 +249,9 @@ typedef enum {
  }
 
 -(void)enqueueBuffer:(NSData *)data packetNum:(UInt32)packetCount packetDescs:(AudioStreamPacketDescription *)inPacketDescs{
+    if (!audioQueue) {
+        [self createQueue];
+    }
     if (inPacketDescs) {
         for (NSInteger i=0;i<packetCount;i++) {
             if (isSeeking) {
@@ -279,41 +283,39 @@ typedef enum {
         while (dataLength)
         {
             size_t bufSpaceRemaining = bufferSize - currBufferFillOffset;
-            if (bufSpaceRemaining < dataLength)
+            if (bufSpaceRemaining < dataLength&&currBufferFillOffset>0)
             {
                 [self putBufferToQueue];
             }
             
-            @synchronized(self)
-            {
-                if (isSeeking) {
-                    return;
-                }
-                if (_audioProperty.state==YUAudioState_Stop) {
-                    return;
-                }
-                
-                bufSpaceRemaining = bufferSize - currBufferFillOffset;
-                size_t copySize;
-                if (bufSpaceRemaining < dataLength)
-                {
-                    copySize = bufSpaceRemaining;
-                }
-                else
-                {
-                    copySize = dataLength;
-                }
-                if (currBufferFillOffset > bufferSize)
-                {
-                    return;
-                }
-                AudioQueueBufferRef fillBuf = audioQueueBuffer[currBufferIndex];
-                memcpy((char*)fillBuf->mAudioData + currBufferFillOffset, (const char*)(data.bytes + offset), copySize);
-                currBufferFillOffset += copySize;
-                currBufferPacketCount = 0;
-                dataLength -= copySize;
-                offset += copySize;
+            if (isSeeking) {
+                return;
             }
+            if (_audioProperty.state==YUAudioState_Stop) {
+                return;
+            }
+            
+            bufSpaceRemaining = bufferSize - currBufferFillOffset;
+            size_t copySize;
+            if (bufSpaceRemaining < dataLength)
+            {
+                copySize = bufSpaceRemaining;
+            }
+            else
+            {
+                copySize = dataLength;
+            }
+            if (currBufferFillOffset > bufferSize)
+            {
+                return;
+            }
+            AudioQueueBufferRef fillBuf = audioQueueBuffer[currBufferIndex];
+            memcpy((char*)fillBuf->mAudioData + currBufferFillOffset, (const char*)(data.bytes + offset), copySize);
+            currBufferFillOffset += copySize;
+            fillBuf->mAudioDataByteSize=currBufferFillOffset;
+            currBufferPacketCount = 0;
+            dataLength -= copySize;
+            offset += copySize;
         }
     }
 }

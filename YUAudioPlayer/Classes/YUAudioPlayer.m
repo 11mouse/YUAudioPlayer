@@ -168,15 +168,11 @@
 
 #pragma mark YUAudioStreamDelegate
 
--(void)audioStream_audioDesc{
+-(void)audioStream_ReadyToProducePackets{
     if (!self.audioQueue) {
         self.audioQueue=[[YUAudioQueue alloc] initWithAudioDesc:self.audioStream.audioDesc];
         _audioQueue.audioProperty=self.audioProperty;
     }
-}
-
--(void)audioStream_ReadyToProducePackets{
-    [self.audioQueue start];
 }
 
 -(void)audioStream_Packets:(NSData *)data packetNum:(UInt32)packetCount packetDescs:(AudioStreamPacketDescription *)inPacketDescs{

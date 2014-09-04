@@ -11,8 +11,6 @@
 
 @protocol YUAudioStreamDelegate <NSObject>
 
--(void)audioStream_audioDesc;
-
 -(void)audioStream_ReadyToProducePackets;
 
 -(void)audioStream_Packets:(NSData*)data packetNum:(UInt32)packetCount packetDescs:(AudioStreamPacketDescription *)inPacketDescs;

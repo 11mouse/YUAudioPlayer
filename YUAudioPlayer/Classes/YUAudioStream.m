@@ -98,9 +98,6 @@ void packetsProc(void *inClientData,UInt32 inNumberBytes,UInt32	inNumberPackets,
          {
              return;
          }
-         if (self.audioStreamDelegate) {
-             [self.audioStreamDelegate audioStream_audioDesc];
-         }
      }else if(inPropertyID==kAudioFileStreamProperty_PacketSizeUpperBound){
          if (_audioProperty.packetMaxSize==0) {
              UInt32 sizeOfUInt32 = sizeof(UInt32);
@@ -256,6 +253,11 @@ void packetsProc(void *inClientData,UInt32 inNumberBytes,UInt32	inNumberPackets,
             break;
     }
     NSLog(@"kAudioFileStreamProperty_%@",propertyStr);
+}
+
+- (void)dealloc
+{
+    
 }
 
 @end
