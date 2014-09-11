@@ -67,14 +67,16 @@
 }
 
 -(void)viewWillDisappear:(BOOL)animated{
-    if (audioPlayer) {
-        [audioPlayer stop];
-        audioPlayer=nil;
-    }
     if (timer) {
         [timer invalidate];
         timer=nil;
     }
+    if (audioPlayer) {
+        [audioPlayer stop];
+        audioPlayer.audioPlayerDelegate=nil;
+        audioPlayer=nil;
+    }
+    
 }
 
 -(void)audioPlayer_StateChanged:(YUAudioPlayerState)playerState error:(NSError*)error{
@@ -139,6 +141,7 @@
     if (!audioPlayer) {
 //        NSString *path=[[NSBundle mainBundle] pathForResource:@"20140827170401" ofType:@"pcm"];
         NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
+//        NSString *path=[[NSBundle mainBundle] pathForResource:@"clg" ofType:@"m4a"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];
@@ -152,7 +155,7 @@
     }
     if (!audioPlayer) {
         //可能会失效
-        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/118441320/4015334072000128.mp3?xcode=5a32c2120b9813b1fd94edcfc8196ff7d29841a6c59fa3b7&song_id=40153340";
+        NSString *path=@"http://music.baidu.com/data/music/file?link=http://yinyueshiting.baidu.com/data2/music/123171781/123171753205200128.mp3?xcode=c931664dde43e4726ed2265dc0fc22d2b5eda7d6ed0c39b3&song_id=123171753";
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;
         [audioPlayer playWithUrl:path];

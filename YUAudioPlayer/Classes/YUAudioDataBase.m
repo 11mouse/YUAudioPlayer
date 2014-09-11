@@ -64,4 +64,10 @@
     }
     return fileTypeHint;
 }
+
+- (void)dealloc
+{
+    
+}
+
 @end

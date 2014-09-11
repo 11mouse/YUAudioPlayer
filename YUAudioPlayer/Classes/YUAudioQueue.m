@@ -80,12 +80,12 @@ typedef enum {
 
 -(void)createQueue{
     if(!audioQueue){
-        OSStatus status = AudioQueueNewOutput (&_audioDesc,audioQueueOutputCallback,(__bridge void *)(self),NULL,NULL,0,&audioQueue);
+        OSStatus status = AudioQueueNewOutput (&_audioDesc,audioQueueOutputCallback,(__bridge  void *)(self),NULL,NULL,0,&audioQueue);
         if (status!=noErr) {
             [self.audioProperty error:YUAudioError_AQ_InitFail];
             return;
         }
-        AudioQueueAddPropertyListener(audioQueue, kAudioQueueProperty_IsRunning, audioQueueIsRunningCallback, (__bridge void *)(self));
+        AudioQueueAddPropertyListener(audioQueue, kAudioQueueProperty_IsRunning, audioQueueIsRunningCallback, (__bridge  void *)(self));
         currBufferIndex=0;
         currBufferFillOffset=0;
         currBufferPacketCount=0;
@@ -531,6 +531,7 @@ void inputBufferHandler(void *inUserData,AudioQueueRef inAQ,AudioQueueBufferRef 
 {
     [self audioStop];
     [self cleanUp];
+    
 }
 
 @end

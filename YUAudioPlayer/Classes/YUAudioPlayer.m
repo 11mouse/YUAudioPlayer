@@ -75,20 +75,31 @@
 }
 
 -(void)stop{
+    if (_audioData) {
+        _audioData.audioDataDelegate=nil;
+        [_audioData cancel];
+        _audioData.audioDataDelegate=nil;
+        _audioData.audioProperty=nil;
+        self.audioData=nil;
+    }
     if (_audioQueue) {
         [_audioQueue stop];
+        _audioQueue.audioProperty=nil;
+        self.audioQueue=nil;
+        self.audioProperty=nil;
     }
     else{
         _audioProperty.state=YUAudioState_Stop;
     }
-    if (_audioData) {
-        _audioData.audioDataDelegate=nil;
-        [_audioData cancel];
-    }
     if (_audioStream) {
         _audioStream.audioStreamDelegate=nil;
+        _audioStream.audioProperty=nil;
         [_audioStream close];
+        self.audioStream=nil;
     }
+    
+    
+    
 }
 
 -(void)seekToTime:(double)seekToTime{

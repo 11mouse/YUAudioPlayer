@@ -17,6 +17,7 @@
     NSTimer *fileTimer;
     BOOL isContine;
     UInt64 newOffset;
+    BOOL exit;
 }
 
 @end
@@ -30,6 +31,7 @@
         readLength=4096;
         isContine=YES;
         newOffset=0;
+        exit=NO;
     }
     return self;
 }
@@ -42,8 +44,8 @@
     if (self.audioDataDelegate) {
         [self.audioDataDelegate audioData_FileType:[self hintForFileExtension:self.urlStr.pathExtension]];
     }
-    NSThread *thread=[[NSThread alloc] initWithTarget:self selector:@selector(startTimer) object:nil];
-    [thread start];
+    exit=NO;
+    [self performSelectorInBackground:@selector(startTimer) withObject:nil];
 }
 
 -(void)seekToOffset:(UInt64)offset{
@@ -61,10 +63,12 @@
             filehandle=[NSFileHandle fileHandleForReadingAtPath:self.urlStr];
             currOffset=0;
             if (!fileTimer) {
-                NSRunLoop* runLoop = [NSRunLoop currentRunLoop];
-                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(fileTimer_intval:) userInfo:nil repeats:YES];
-                [runLoop run];
+                fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(fileTimer_intval) userInfo:nil repeats:YES];
+                [[NSRunLoop currentRunLoop] run];
             }
+        }
+        else{
+            [self audioDataError:@"file read error" userInfo:nil];
         }
     }
     else{
@@ -74,18 +78,27 @@
 
 ///取消
 -(void)cancel{
-    if (fileTimer) {
-        [fileTimer invalidate];
-        fileTimer=nil;
-    }
-    if (filehandle) {
-        [filehandle closeFile];
-        filehandle=nil;
-    }
+    exit=YES;
 }
 
--(void)fileTimer_intval:(NSTimer*)currTimer{
+-(void)fileTimer_intval{
     if (!fileTimer) {
+        return;
+    }
+    if (exit) {
+        exit=NO;
+        if (fileTimer) {
+            [fileTimer invalidate];
+            fileTimer=nil;
+        }
+        if (filehandle) {
+            [filehandle closeFile];
+            filehandle=nil;
+        }
+        CFRunLoopStop([[NSRunLoop currentRunLoop] getCFRunLoop]);//必须停止，要不线程一直不会被释放
+        return;
+    }
+    if (!filehandle) {
         return;
     }
     if (newOffset>0) {
