@@ -1,7 +1,7 @@
 //
 //  YUAudioStream.h
 //  YUAudioPlayer
-//
+//  音频流类。接收来自音频数据源YUAudioData的数据流解析为音频帧，然后转发给YUAudioQueue播放
 //  Created by duan on 14-8-18.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //

@@ -59,6 +59,15 @@
     }
 }
 
+-(void)clean{
+    self.fileSize=0;
+    self.packetMaxSize=0;
+    self.magicData=NULL;
+    self.cookieSize=0;
+    self.state=YUAudioState_Init;
+    self.error=nil;
+}
+
 - (void)dealloc
 {
     

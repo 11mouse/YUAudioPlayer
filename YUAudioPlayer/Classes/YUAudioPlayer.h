@@ -1,7 +1,7 @@
 //
 //  YUAudioPlayer.h
 //  YUAudioPlayer
-//
+//  播放器类，提供音频播放功能，作为YUAudioQueue,YUAudioStream,YUAudioData,YUAudioProperty的中转组织者
 //  Created by duan on 14-8-18.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //

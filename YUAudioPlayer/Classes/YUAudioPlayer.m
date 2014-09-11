@@ -50,6 +50,26 @@
 }
 
 -(void) playWithAudioData:(YUAudioDataBase*)audioData{
+    if (_audioProperty) {
+        [_audioProperty clean];
+    }
+    if (self.audioQueue) {
+        [_audioQueue stop];
+        self.audioQueue=nil;
+    }
+    if (_audioData) {
+        _audioData.audioDataDelegate=nil;
+        [_audioData cancel];
+        _audioData.audioDataDelegate=nil;
+        _audioData.audioProperty=nil;
+        self.audioData=nil;
+    }
+    if (_audioStream) {
+        _audioStream.audioStreamDelegate=nil;
+        _audioStream.audioProperty=nil;
+        [_audioStream close];
+        self.audioStream=nil;
+    }
     if(!audioData){
         ///播放错误
         [self.audioProperty error:YUAudioError_AD_Nil];
@@ -155,8 +175,8 @@
 #pragma mark YUAudioDataDelegate
 
 -(void)audioData_FileType:(AudioFileTypeID)fileTypeHint{
-    if (!_audioStream) {
-        self.audioStream=[[YUAudioStream alloc] initWithFileType:fileTypeHint];
+    if (!_audioStream){
+        self.audioStream=[[YUAudioStream alloc] init];
         _audioStream.audioProperty=self.audioProperty;
         _audioStream.audioStreamDelegate=self;
     }

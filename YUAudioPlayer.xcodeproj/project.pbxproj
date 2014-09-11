@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0B22629819B85E1B00240A1B /* 20140827170401.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 0B22629719B85E1B00240A1B /* 20140827170401.pcm */; };
+		0B22629819B85E1B00240A1B /* pcm测试.pcm in Resources */ = {isa = PBXBuildFile; fileRef = 0B22629719B85E1B00240A1B /* pcm测试.pcm */; };
+		0B462D2919C183DD007B68D5 /* YUAudioPlayList.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B462D2819C183DD007B68D5 /* YUAudioPlayList.m */; };
+		0B462D2C19C18485007B68D5 /* PlayListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B462D2B19C18485007B68D5 /* PlayListViewController.m */; };
 		0B5450E619AB1D930002B2C8 /* SelectViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450E519AB1D930002B2C8 /* SelectViewController.m */; };
 		0B5450E919AB1FE40002B2C8 /* RecordViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450E819AB1FE40002B2C8 /* RecordViewController.m */; };
 		0B5450EC19AB27430002B2C8 /* YUAudioRecorder.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B5450EB19AB27430002B2C8 /* YUAudioRecorder.m */; };
@@ -16,7 +18,7 @@
 		0B6237A319B1785D00CD2D49 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B6237A219B1785D00CD2D49 /* AVFoundation.framework */; };
 		0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B68995919A5D1F60067749D /* YUAudioProperty.m */; };
 		0B7976D519ADC5620003FD39 /* RecordListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0B7976D419ADC5620003FD39 /* RecordListViewController.m */; };
-		0BB0296219B07FE00002C9CA /* clg.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BB0296119B07FE00002C9CA /* clg.m4a */; };
+		0BB0296219B07FE00002C9CA /* 灿烂过.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 0BB0296119B07FE00002C9CA /* 灿烂过.m4a */; };
 		0BCE136519A1DC260093E91F /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136419A1DC260093E91F /* main.m */; };
 		0BCE136819A1DC260093E91F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136719A1DC260093E91F /* AppDelegate.m */; };
 		0BCE136B19A1DC260093E91F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE136A19A1DC260093E91F /* ViewController.m */; };
@@ -29,7 +31,7 @@
 		0BCE139419A1DE240093E91F /* YUAudioDataNT.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139319A1DE240093E91F /* YUAudioDataNT.m */; };
 		0BCE139719A1DE360093E91F /* YUAudioDataLocal.m in Sources */ = {isa = PBXBuildFile; fileRef = 0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */; };
 		0BCE139919A1E5500093E91F /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0BCE139819A1E5500093E91F /* AudioToolbox.framework */; };
-		0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139A19A20B100093E91F /* pfzl.mp3 */; };
+		0BCE139B19A20B100093E91F /* 平凡之路.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 0BCE139A19A20B100093E91F /* 平凡之路.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +45,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0B22629719B85E1B00240A1B /* 20140827170401.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = 20140827170401.pcm; sourceTree = "<group>"; };
+		0B22629719B85E1B00240A1B /* pcm测试.pcm */ = {isa = PBXFileReference; lastKnownFileType = file; path = "pcm测试.pcm"; sourceTree = "<group>"; };
+		0B462D2719C183DD007B68D5 /* YUAudioPlayList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioPlayList.h; sourceTree = "<group>"; };
+		0B462D2819C183DD007B68D5 /* YUAudioPlayList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioPlayList.m; sourceTree = "<group>"; };
+		0B462D2A19C18485007B68D5 /* PlayListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PlayListViewController.h; sourceTree = "<group>"; };
+		0B462D2B19C18485007B68D5 /* PlayListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PlayListViewController.m; sourceTree = "<group>"; };
 		0B5450E419AB1D930002B2C8 /* SelectViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SelectViewController.h; sourceTree = "<group>"; };
 		0B5450E519AB1D930002B2C8 /* SelectViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SelectViewController.m; sourceTree = "<group>"; };
 		0B5450E719AB1FE40002B2C8 /* RecordViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RecordViewController.h; sourceTree = "<group>"; };
@@ -58,7 +64,7 @@
 		0B68995919A5D1F60067749D /* YUAudioProperty.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioProperty.m; sourceTree = "<group>"; };
 		0B7976D319ADC5620003FD39 /* RecordListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RecordListViewController.h; path = YUAudioPlayer/RecordListViewController.h; sourceTree = SOURCE_ROOT; };
 		0B7976D419ADC5620003FD39 /* RecordListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RecordListViewController.m; path = YUAudioPlayer/RecordListViewController.m; sourceTree = SOURCE_ROOT; };
-		0BB0296119B07FE00002C9CA /* clg.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = clg.m4a; sourceTree = "<group>"; };
+		0BB0296119B07FE00002C9CA /* 灿烂过.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = "灿烂过.m4a"; sourceTree = "<group>"; };
 		0BCE135F19A1DC260093E91F /* YUAudioPlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = YUAudioPlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0BCE136319A1DC260093E91F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0BCE136419A1DC260093E91F /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -83,7 +89,7 @@
 		0BCE139519A1DE360093E91F /* YUAudioDataLocal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YUAudioDataLocal.h; sourceTree = "<group>"; };
 		0BCE139619A1DE360093E91F /* YUAudioDataLocal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YUAudioDataLocal.m; sourceTree = "<group>"; };
 		0BCE139819A1E5500093E91F /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		0BCE139A19A20B100093E91F /* pfzl.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = pfzl.mp3; sourceTree = "<group>"; };
+		0BCE139A19A20B100093E91F /* 平凡之路.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = "平凡之路.mp3"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -106,6 +112,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0B8C6A7C19C1A3CA00193436 /* music */ = {
+			isa = PBXGroup;
+			children = (
+				0B22629719B85E1B00240A1B /* pcm测试.pcm */,
+				0BB0296119B07FE00002C9CA /* 灿烂过.m4a */,
+				0BCE139A19A20B100093E91F /* 平凡之路.mp3 */,
+			);
+			name = music;
+			sourceTree = "<group>";
+		};
 		0BCE135619A1DC260093E91F = {
 			isa = PBXGroup;
 			children = (
@@ -129,9 +145,7 @@
 		0BCE136119A1DC260093E91F /* YUAudioPlayer */ = {
 			isa = PBXGroup;
 			children = (
-				0B22629719B85E1B00240A1B /* 20140827170401.pcm */,
-				0BB0296119B07FE00002C9CA /* clg.m4a */,
-				0BCE139A19A20B100093E91F /* pfzl.mp3 */,
+				0B8C6A7C19C1A3CA00193436 /* music */,
 				0BCE138519A1DD150093E91F /* Classes */,
 				0BCE136619A1DC260093E91F /* AppDelegate.h */,
 				0BCE136719A1DC260093E91F /* AppDelegate.m */,
@@ -145,6 +159,8 @@
 				0B5450E819AB1FE40002B2C8 /* RecordViewController.m */,
 				0B7976D319ADC5620003FD39 /* RecordListViewController.h */,
 				0B7976D419ADC5620003FD39 /* RecordListViewController.m */,
+				0B462D2A19C18485007B68D5 /* PlayListViewController.h */,
+				0B462D2B19C18485007B68D5 /* PlayListViewController.m */,
 			);
 			path = YUAudioPlayer;
 			sourceTree = "<group>";
@@ -178,6 +194,8 @@
 		0BCE138519A1DD150093E91F /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				0B462D2719C183DD007B68D5 /* YUAudioPlayList.h */,
+				0B462D2819C183DD007B68D5 /* YUAudioPlayList.m */,
 				0BCE138619A1DD270093E91F /* YUAudioPlayer.h */,
 				0BCE138719A1DD270093E91F /* YUAudioPlayer.m */,
 				0B5450EA19AB27430002B2C8 /* YUAudioRecorder.h */,
@@ -283,11 +301,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0BB0296219B07FE00002C9CA /* clg.m4a in Resources */,
+				0BB0296219B07FE00002C9CA /* 灿烂过.m4a in Resources */,
 				0BCE137019A1DC260093E91F /* Images.xcassets in Resources */,
-				0B22629819B85E1B00240A1B /* 20140827170401.pcm in Resources */,
+				0B22629819B85E1B00240A1B /* pcm测试.pcm in Resources */,
 				0B5E6E3B19B6E43500F62F5B /* YUAudioError.plist in Resources */,
-				0BCE139B19A20B100093E91F /* pfzl.mp3 in Resources */,
+				0BCE139B19A20B100093E91F /* 平凡之路.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -308,6 +326,7 @@
 				0BCE136B19A1DC260093E91F /* ViewController.m in Sources */,
 				0BCE139119A1DE0A0093E91F /* YUAudioDataBase.m in Sources */,
 				0BCE138B19A1DDE30093E91F /* YUAudioQueue.m in Sources */,
+				0B462D2C19C18485007B68D5 /* PlayListViewController.m in Sources */,
 				0B5450E919AB1FE40002B2C8 /* RecordViewController.m in Sources */,
 				0B68995A19A5D1F60067749D /* YUAudioProperty.m in Sources */,
 				0B5450E619AB1D930002B2C8 /* SelectViewController.m in Sources */,
@@ -319,6 +338,7 @@
 				0BCE139719A1DE360093E91F /* YUAudioDataLocal.m in Sources */,
 				0BCE139419A1DE240093E91F /* YUAudioDataNT.m in Sources */,
 				0B5450EF19AB2C840002B2C8 /* YUAudioFile.m in Sources */,
+				0B462D2919C183DD007B68D5 /* YUAudioPlayList.m in Sources */,
 				0BCE138819A1DD270093E91F /* YUAudioPlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

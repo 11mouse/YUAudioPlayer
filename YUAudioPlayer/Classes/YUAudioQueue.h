@@ -1,7 +1,7 @@
 //
 //  YUAudioQueue.h
 //  YUAudioPlayer
-//
+//  音频队列类。封装了AudioQueue，可以接收来自YUAudioStream的音频帧进行播放，或者输出录制的音频帧给YUAudioFile写入音频文件
 //  Created by duan on 14-8-18.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //
@@ -37,7 +37,6 @@
 -(void)enqueueBuffer:(NSData *)data packetNum:(UInt32)packetCount packetDescs:(AudioStreamPacketDescription *)inPacketDescs;
 
 -(void)seeked;
-
 
 -(void)startRecord;
 -(void)stopRecord;

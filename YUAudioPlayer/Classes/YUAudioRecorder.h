@@ -1,7 +1,7 @@
 //
 //  YUAudioRecorder.h
 //  YUAudioPlayer
-//
+//  录音类，提供音频录制功能，作为YUAudioQueue,YUAudioFile的中转组织者
 //  Created by duan on 14-8-25.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //

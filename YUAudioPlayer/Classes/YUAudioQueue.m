@@ -183,13 +183,16 @@ typedef enum {
 -(void)audioStop{
     @synchronized(self)
     {
-        isStart=NO;
-        OSStatus status= AudioQueueStop(audioQueue, true);
-        if (status!=noErr)
-        {
-            [self.audioProperty error:YUAudioError_AQ_StopFail];
-            return;
+        if (audioQueue) {
+            isStart=NO;
+            OSStatus status= AudioQueueStop(audioQueue, true);
+            if (status!=noErr)
+            {
+                [self.audioProperty error:YUAudioError_AQ_StopFail];
+                return;
+            }
         }
+        
     }
 }
 
@@ -238,9 +241,13 @@ typedef enum {
     bufferUseNum=0;
     currBufferIndex=0;
     userState=userInit;
-    [conditionLock lock];
-    [conditionLock signal];
-    [conditionLock unlock];
+    if (conditionLock) {
+        [conditionLock lock];
+        [conditionLock signal];
+        [conditionLock unlock];
+        conditionLock=nil;
+    }
+    
 }
 
 #define mark 播放: 缓冲区加入队列及播放结束
@@ -531,7 +538,6 @@ void inputBufferHandler(void *inUserData,AudioQueueRef inAQ,AudioQueueBufferRef 
 {
     [self audioStop];
     [self cleanUp];
-    
 }
 
 @end

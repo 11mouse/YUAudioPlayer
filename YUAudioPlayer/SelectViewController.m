@@ -9,6 +9,7 @@
 #import "SelectViewController.h"
 #import "ViewController.h"
 #import "RecordViewController.h"
+#import "PlayListViewController.h"
 @interface SelectViewController ()
 
 @end
@@ -32,6 +33,13 @@
     [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
     [btn addTarget:self action:@selector(btnRecord_Events) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:btn];
+    
+    btn=[UIButton buttonWithType:UIButtonTypeCustom];
+    btn.frame=CGRectMake(10, 210, 100, 30);
+    [btn setTitle:@"播放列表" forState:UIControlStateNormal];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn addTarget:self action:@selector(btnPlayList_Events) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
 }
 
 -(void)btnPlay_Events{
@@ -42,6 +50,11 @@
 -(void)btnRecord_Events{
     RecordViewController *recordViewController=[[RecordViewController alloc] init];
     [self.navigationController pushViewController:recordViewController animated:YES];
+}
+
+-(void)btnPlayList_Events{
+    PlayListViewController *viewController=[[PlayListViewController alloc] init];
+    [self.navigationController pushViewController:viewController animated:YES];
 }
 
 - (void)didReceiveMemoryWarning {

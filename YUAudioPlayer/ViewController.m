@@ -140,7 +140,7 @@
     }
     if (!audioPlayer) {
 //        NSString *path=[[NSBundle mainBundle] pathForResource:@"20140827170401" ofType:@"pcm"];
-        NSString *path=[[NSBundle mainBundle] pathForResource:@"pfzl" ofType:@"mp3"];
+        NSString *path=[[NSBundle mainBundle] pathForResource:@"平凡之路" ofType:@"mp3"];
 //        NSString *path=[[NSBundle mainBundle] pathForResource:@"clg" ofType:@"m4a"];
         audioPlayer=[[YUAudioPlayer alloc] init];
         audioPlayer.audioPlayerDelegate=self;

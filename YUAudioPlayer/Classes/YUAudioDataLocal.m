@@ -45,7 +45,9 @@
         [self.audioDataDelegate audioData_FileType:[self hintForFileExtension:self.urlStr.pathExtension]];
     }
     exit=NO;
-    [self performSelectorInBackground:@selector(startTimer) withObject:nil];
+//    [self performSelectorInBackground:@selector(startTimer) withObject:nil];
+    [NSThread detachNewThreadSelector:@selector(startTimer) toTarget:self withObject:nil];
+    
 }
 
 -(void)seekToOffset:(UInt64)offset{
@@ -107,6 +109,9 @@
     UInt64 currReadLength=readLength;
     if (currOffset+readLength>fileSize) {
         currReadLength=fileSize-currOffset;
+    }
+    if (currOffset==0) {
+        isContine=NO;
     }
     if (newOffset>0){
         [filehandle seekToFileOffset:newOffset];

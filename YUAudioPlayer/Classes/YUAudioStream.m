@@ -25,6 +25,25 @@
 @end
 @implementation YUAudioStream
 
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        packetCount=0;
+        packetDataSize=0;
+        bitRate=0;
+        dataOffset=0;
+        packetDuration=0;
+        isSeeking=NO;
+        OSStatus status= AudioFileStreamOpen((__bridge void *)(self), propertyListenerProc, packetsProc, 0, &_audioFileStreamID);
+        if (status!=noErr)
+        {
+            [self.audioProperty error:YUAudioError_AFS_OpenFail];
+        }
+    }
+    return self;
+}
+
 - (instancetype)initWithFileType:(AudioFileTypeID)fileTypeID
 {
     self = [super init];

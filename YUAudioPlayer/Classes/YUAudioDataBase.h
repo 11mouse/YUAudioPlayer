@@ -1,7 +1,7 @@
 //
 //  YUAudioDataBase.h
 //  YUAudioPlayer
-//
+//  音频数据源基类，提供了返回音频数据的协议，及供YUAudioPlayer控制的开始及取消方法
 //  Created by duan on 14-8-18.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //

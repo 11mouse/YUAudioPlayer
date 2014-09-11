@@ -1,7 +1,7 @@
 //
 //  YUAudioProperty.h
 //  YUAudioPlayer
-//
+//  音频属性类，包含音频属性、错误处理、播放状态，及枚举和宏的定义
 //  Created by duan on 14-8-21.
 //  Copyright (c) 2014年 duan. All rights reserved.
 //
@@ -77,5 +77,6 @@ typedef struct YURecordFormat{
 
 -(void)error:(YUAudioError)errorType;
 -(NSString*)errorDomaim:(YUAudioError)errorType;
+-(void)clean;
 
 @end

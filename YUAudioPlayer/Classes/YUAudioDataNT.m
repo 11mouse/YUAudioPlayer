@@ -18,6 +18,7 @@
     BOOL isContine;
     UInt64 fileSize;
     UInt64 seekOffset;
+    UInt64 currDataSize;
 }
 
 @end
@@ -31,6 +32,7 @@
         fileSize=0;
         isContine=YES;
         seekOffset=0;
+        currDataSize=0;
     }
     return self;
 }
@@ -88,7 +90,11 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data{
     if (self.audioDataDelegate) {
+        if (currDataSize==0) {
+            isContine=NO;
+        }
         [self.audioDataDelegate audioData_Arrived:data contine:isContine];
+        currDataSize=currDataSize+data.length;
         if (!isContine) {
             isContine=YES;
         }
