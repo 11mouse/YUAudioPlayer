@@ -8,7 +8,7 @@
 
 #import "YUAudioPlayList.h"
 
-@interface YUAudioPlayList()
+@interface YUAudioPlayList()<YUAudioPlayerDelegate>
 {
     YUAudioPlayer *_audioPlayer;
 }
@@ -52,10 +52,14 @@
         return;
     }
     _playIndex=index;
+    if (_delegate) {
+        [_delegate playList:self didPlayIndex:_playIndex];
+    }
     if (_dataSource) {
         YUAudioDataBase *audioData=[_dataSource playList:self playIndex:_playIndex];
         if (!_audioPlayer) {
             _audioPlayer=[[YUAudioPlayer alloc] init];
+            _audioPlayer.audioPlayerDelegate=self;
         }
         [_audioPlayer playWithAudioData:audioData];
     }
@@ -84,6 +88,19 @@
     }
     _playIndex=0;
     [self playAtIndex:_playIndex];
+}
+
+-(YUAudioPlayerState)state{
+    if (_audioPlayer) {
+        return _audioPlayer.state;
+    }
+    return YUAudioState_Stop;
+}
+
+-(void)audioPlayer_StateChanged:(YUAudioPlayerState)playerState error:(NSError*)error{
+    if (_delegate) {
+        [_delegate playList:self stateChanged:playerState error:error];
+    }
 }
 
 - (void)dealloc

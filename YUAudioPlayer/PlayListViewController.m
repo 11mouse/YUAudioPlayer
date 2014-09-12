@@ -10,7 +10,7 @@
 #import "YUAudioPlayList.h"
 #import "YUAudioDataLocal.h"
 
-@interface PlayListViewController ()<UITableViewDataSource,UITableViewDelegate,YUAudioPlayListDataSource>
+@interface PlayListViewController ()<UITableViewDataSource,UITableViewDelegate,YUAudioPlayListDataSource,YUAudioPlayListDelagate>
 {
     UITableView *contentTableView;
     NSArray *musicArr;
@@ -52,7 +52,23 @@
     if (!cell) {
         cell=[[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cell"];
     }
-    cell.textLabel.text=[musicArr objectAtIndex:indexPath.row];
+    if (indexPath.row==audioPlayList.playIndex) {
+        NSString *playStateStr=@"初始化";
+        if (audioPlayList.state==YUAudioState_Waiting) {
+            playStateStr=@"缓冲";
+        }else if (audioPlayList.state==YUAudioState_Playing) {
+            playStateStr=@"播放";
+        }else if (audioPlayList.state==YUAudioState_Paused) {
+            playStateStr=@"暂停";
+        }else if (audioPlayList.state==YUAudioState_Stop) {
+            playStateStr=@"停止";
+        }
+        cell.textLabel.text=[NSString stringWithFormat:@"%@ %@",[musicArr objectAtIndex:indexPath.row],playStateStr];
+    }
+    else{
+        cell.textLabel.text=[musicArr objectAtIndex:indexPath.row];
+    }
+    
     return cell;
 }
 
@@ -61,6 +77,7 @@
         if (!audioPlayList) {
             audioPlayList=[[YUAudioPlayList alloc] init];
             audioPlayList.dataSource=self;
+            audioPlayList.delegate=self;
         }
         [audioPlayList play];
     }else if (segControl.selectedSegmentIndex==1) {
@@ -91,6 +108,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     [audioPlayList playAtIndex:indexPath.row];
+}
+
+-(void)playList:(YUAudioPlayList *)playList didPlayIndex:(NSInteger)index{
+    [contentTableView reloadData];
+}
+
+-(void)playList:(YUAudioPlayList *)playList stateChanged:(YUAudioPlayerState)state error:(NSError *)error{
+    [contentTableView reloadData];
 }
 
 - (void)didReceiveMemoryWarning {

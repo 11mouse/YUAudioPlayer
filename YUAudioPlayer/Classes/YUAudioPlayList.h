@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "YUAudioPlayer.h"
 @protocol YUAudioPlayListDataSource;
+@protocol YUAudioPlayListDelagate;
 
 @interface YUAudioPlayList : NSObject
 
@@ -21,9 +22,10 @@
 -(void)reload;
 
 @property(assign,nonatomic) id<YUAudioPlayListDataSource> dataSource;
+@property(assign,nonatomic) id<YUAudioPlayListDelagate> delegate;
 @property(assign,nonatomic,readonly) NSInteger playIndex;
 @property(assign,nonatomic,readonly) NSInteger count;
-@property(assign,nonatomic,readonly) YUAudioPlayer *currAudioPlayer;
+@property(assign,nonatomic,readonly) YUAudioPlayerState state;
 
 @end
 
@@ -33,5 +35,13 @@
 @required
 - (NSInteger)numOfItems:(YUAudioPlayList *)playList;
 - (YUAudioDataBase *)playList:(YUAudioPlayList *)playList playIndex:(NSInteger)index;
+
+@end
+
+@protocol YUAudioPlayListDelagate<NSObject>
+
+@required
+- (void)playList:(YUAudioPlayList *)playList didPlayIndex:(NSInteger)index;
+- (void)playList:(YUAudioPlayList *)playList stateChanged:(YUAudioPlayerState)state error:(NSError*)error;
 
 @end
