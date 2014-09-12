@@ -28,6 +28,7 @@
 @property(nonatomic,retain) YUAudioProperty* audioProperty;
 @property(nonatomic) UInt64 seekByteOffset;
 @property(nonatomic) double seekTime;
+@property(nonatomic) NSInteger audioVersion;
 
 -(void)audioStreamParseBytes:(NSData*)data flags:(UInt32)flags;
 

@@ -18,6 +18,7 @@
     BOOL isContine;
     UInt64 newOffset;
     BOOL exit;
+    NSRunLoop *threadRunLoop;
 }
 
 @end
@@ -42,7 +43,7 @@
         return;
     }
     if (self.audioDataDelegate) {
-        [self.audioDataDelegate audioData_FileType:[self hintForFileExtension:self.urlStr.pathExtension]];
+        [self.audioDataDelegate audioData_FileType:self fileType:[self hintForFileExtension:self.urlStr.pathExtension]];
     }
     exit=NO;
 //    [self performSelectorInBackground:@selector(startTimer) withObject:nil];
@@ -66,7 +67,8 @@
             currOffset=0;
             if (!fileTimer) {
                 fileTimer=[NSTimer scheduledTimerWithTimeInterval:0.05 target:self selector:@selector(fileTimer_intval) userInfo:nil repeats:YES];
-                [[NSRunLoop currentRunLoop] run];
+                threadRunLoop=[NSRunLoop currentRunLoop];
+                [threadRunLoop run];
             }
         }
         else{
@@ -81,6 +83,7 @@
 ///取消
 -(void)cancel{
     exit=YES;
+    
 }
 
 -(void)fileTimer_intval{
@@ -88,7 +91,6 @@
         return;
     }
     if (exit) {
-        exit=NO;
         if (fileTimer) {
             [fileTimer invalidate];
             fileTimer=nil;
@@ -97,7 +99,11 @@
             [filehandle closeFile];
             filehandle=nil;
         }
-        CFRunLoopStop([[NSRunLoop currentRunLoop] getCFRunLoop]);//必须停止，要不线程一直不会被释放
+        [[NSNotificationCenter defaultCenter] postNotificationName:Noti_AudioDataExited object:nil userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithInteger:self.audioVersion] forKey:@"audioVersion"]];
+        if (self.audioDataDelegate) {
+            [self.audioDataDelegate audioData_ShouldExit:self];
+        }
+        CFRunLoopStop([threadRunLoop getCFRunLoop]);//必须停止，要不线程一直不会被释放
         return;
     }
     if (!filehandle) {
@@ -119,7 +125,7 @@
     }
     NSData* data=[filehandle readDataOfLength:(NSUInteger)currReadLength];
     if (self.audioDataDelegate&&fileTimer) {
-        [self.audioDataDelegate audioData_Arrived:data contine:isContine];
+        [self.audioDataDelegate audioData_Arrived:self data:data contine:isContine];
     }
     currOffset+=readLength;
     if (currOffset>=fileSize) {
@@ -133,7 +139,7 @@
     }
     if (!fileTimer) {
         if (self.audioDataDelegate) {
-            [self.audioDataDelegate audioData_Finished:nil];
+            [self.audioDataDelegate audioData_Finished:self error:nil];
             [filehandle closeFile];
             filehandle=nil;
         }

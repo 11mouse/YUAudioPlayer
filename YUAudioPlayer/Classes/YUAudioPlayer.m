@@ -13,7 +13,9 @@
 #import "YUAudioStream.h"
 
 @interface YUAudioPlayer()<YUAudioDataDelegate,YUAudioStreamDelegate,YUAudioPropertyDelegate>{
-    
+    NSInteger audioVersion;
+    NSMutableDictionary *audioQueues;
+    NSMutableDictionary *audioStreams;
 }
 @property(nonatomic,retain) YUAudioDataBase *audioData;
 @property(nonatomic,retain) YUAudioQueue *audioQueue;
@@ -29,6 +31,9 @@
     if (self) {
         self.audioProperty=[[YUAudioProperty alloc] init];
         self.audioProperty.audioPropertyDelegate=self;
+        audioVersion=0;
+        audioQueues=[[NSMutableDictionary alloc] init];
+        audioStreams=[[NSMutableDictionary alloc] init];
     }
     return self;
 }
@@ -58,9 +63,7 @@
         self.audioQueue=nil;
     }
     if (_audioData) {
-        _audioData.audioDataDelegate=nil;
         [_audioData cancel];
-        _audioData.audioDataDelegate=nil;
         _audioData.audioProperty=nil;
         self.audioData=nil;
     }
@@ -76,6 +79,7 @@
         return;
     }
     self.audioData=audioData;
+    self.audioData.audioVersion=++audioVersion;
     self.audioData.audioProperty=self.audioProperty;
     self.audioData.audioDataDelegate=self;
     [self.audioData start];
@@ -96,9 +100,7 @@
 
 -(void)stop{
     if (_audioData) {
-        _audioData.audioDataDelegate=nil;
         [_audioData cancel];
-        _audioData.audioDataDelegate=nil;
         _audioData.audioProperty=nil;
         self.audioData=nil;
     }
@@ -117,9 +119,6 @@
         [_audioStream close];
         self.audioStream=nil;
     }
-    
-    
-    
 }
 
 -(void)seekToTime:(double)seekToTime{
@@ -174,15 +173,23 @@
 
 #pragma mark YUAudioDataDelegate
 
--(void)audioData_FileType:(AudioFileTypeID)fileTypeHint{
+-(void)audioData_FileType:(YUAudioDataBase*)currAudioData fileType:(AudioFileTypeID)fileTypeHint{
+    if (currAudioData!=self.audioData) {
+        return;
+    }
     if (!_audioStream){
         self.audioStream=[[YUAudioStream alloc] init];
         _audioStream.audioProperty=self.audioProperty;
         _audioStream.audioStreamDelegate=self;
+        _audioStream.audioVersion=self.audioData.audioVersion;
+        [audioStreams setObject:_audioStream forKey:[NSString stringWithFormat:@"%ld",(long)self.audioData.audioVersion]];
     }
 }
 
--(void)audioData_Arrived:(NSData *)data contine:(BOOL)isContine{
+-(void)audioData_Arrived:(YUAudioDataBase*)currAudioData data:(NSData *)data contine:(BOOL)isContine{
+    if (currAudioData!=self.audioData) {
+        return;
+    }
     UInt32 flags=0;
     if (!isContine) {
         flags=kAudioFileStreamParseFlag_Discontinuity;
@@ -191,10 +198,18 @@
     [self.audioStream audioStreamParseBytes:data flags:flags];
 }
 
--(void)audioData_Finished:(NSError *)error{
+-(void)audioData_Finished:(YUAudioDataBase*)currAudioData error:(NSError *)error{
+    if (currAudioData!=self.audioData) {
+        return;
+    }
     if (_audioQueue) {
         _audioQueue.loadFinished=YES;
     }
+}
+
+-(void)audioData_ShouldExit:(YUAudioDataBase*)currAudioData{
+    [audioQueues removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)currAudioData.audioVersion]];
+    [audioStreams removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)currAudioData.audioVersion]];
 }
 
 #pragma mark YUAudioStreamDelegate
@@ -203,6 +218,8 @@
     if (!self.audioQueue) {
         self.audioQueue=[[YUAudioQueue alloc] initWithAudioDesc:self.audioStream.audioDesc];
         _audioQueue.audioProperty=self.audioProperty;
+        _audioQueue.audioVersion=self.audioData.audioVersion;
+        [audioQueues setObject:_audioQueue forKey:[NSString stringWithFormat:@"%ld",(long)self.audioData.audioVersion]];
     }
 }
 

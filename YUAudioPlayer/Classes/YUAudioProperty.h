@@ -16,6 +16,8 @@
 #define Dur_RecordBuffer 0.5 //录音每次时间
 #define Size_RecordBufferSize 2048 //录音缓冲区默认大小
 
+#define Noti_AudioDataExited @"Noti_AudioDataExited"
+
 typedef enum{
     YUAudioState_Init=0,
     YUAudioState_Waiting,

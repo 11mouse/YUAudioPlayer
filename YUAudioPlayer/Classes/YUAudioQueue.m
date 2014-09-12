@@ -39,6 +39,7 @@ typedef enum {
     UInt32 ioPacketNum;
     BOOL willStop;
     BOOL waitBuffer;
+    BOOL shouldExit;
 }
 @property(nonatomic) AudioStreamBasicDescription audioDesc;
 @end
@@ -61,6 +62,8 @@ typedef enum {
         isRecordMode=NO;
         willStop=NO;
         waitBuffer=YES;
+        shouldExit=NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioDataExited:) name:Noti_AudioDataExited object:nil];
     }
     return self;
 }
@@ -176,8 +179,7 @@ typedef enum {
     _audioProperty.state=YUAudioState_Stop;
     userState=userStop;
     willStop=YES;
-    [self audioStop];
-    [self cleanUp];
+    shouldExit=YES;
 }
 
 -(void)audioStop{
@@ -241,13 +243,26 @@ typedef enum {
     bufferUseNum=0;
     currBufferIndex=0;
     userState=userInit;
+    
     if (conditionLock) {
         [conditionLock lock];
         [conditionLock signal];
         [conditionLock unlock];
         conditionLock=nil;
     }
-    
+}
+//释放资源
+-(void)audioDataExited:(NSNotification*)noti{
+    if (shouldExit) {
+        if (noti&&noti.userInfo&&[noti.userInfo objectForKey:@"audioVersion"]) {
+            NSNumber* dataVersionNum=[noti.userInfo objectForKey:@"audioVersion"];
+            if ([dataVersionNum integerValue]==self.audioVersion) {
+                [self audioStop];
+                [self cleanUp];
+                [[NSNotificationCenter defaultCenter] removeObserver:self];
+            }
+        }
+    }
 }
 
 #define mark 播放: 缓冲区加入队列及播放结束

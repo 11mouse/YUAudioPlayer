@@ -22,6 +22,7 @@
 @property(nonatomic) BOOL loadFinished;
 @property(nonatomic,retain) YUAudioProperty* audioProperty;
 @property(nonatomic) id<YUAudioQueueDelegate> audioQueueDelegate;
+@property(nonatomic) NSInteger audioVersion;
 
 
 - (instancetype)initWithAudioDesc:(AudioStreamBasicDescription)audioDesc;

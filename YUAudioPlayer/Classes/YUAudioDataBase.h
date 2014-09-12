@@ -8,11 +8,13 @@
 
 #import <Foundation/Foundation.h>
 #import "YUAudioProperty.h"
-@protocol YUAudioDataDelegate <NSObject>
--(void) audioData_FileType:(AudioFileTypeID)fileTypeHint;
--(void) audioData_Arrived:(NSData*)data contine:(BOOL)isContine;
--(void) audioData_Finished:(NSError*)error;
+@class YUAudioDataBase;
 
+@protocol YUAudioDataDelegate <NSObject>
+-(void) audioData_FileType:(YUAudioDataBase*)currAudioData fileType:(AudioFileTypeID)fileTypeHint;
+-(void) audioData_Arrived:(YUAudioDataBase*)currAudioData data:(NSData*)data contine:(BOOL)isContine;
+-(void) audioData_Finished:(YUAudioDataBase*)currAudioData error:(NSError*)error;
+-(void) audioData_ShouldExit:(YUAudioDataBase*)currAudioData;
 @end
 
 @interface YUAudioDataBase : NSObject
@@ -20,6 +22,7 @@
 @property(nonatomic,retain) NSString *urlStr;
 @property(nonatomic,retain) YUAudioProperty* audioProperty;
 @property(nonatomic,assign) id<YUAudioDataDelegate> audioDataDelegate;
+@property(nonatomic) NSInteger audioVersion;
 
 ///开始
 -(void)start;

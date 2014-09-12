@@ -41,7 +41,7 @@
 -(void)start{
     if (!connection&&self.urlStr) {
         if (self.audioDataDelegate) {
-            [self.audioDataDelegate audioData_FileType:[self hintForFileExtension:self.urlStr.pathExtension]];
+            [self.audioDataDelegate audioData_FileType:self fileType:[self hintForFileExtension:self.urlStr.pathExtension]];
         }
         [self performSelectorInBackground:@selector(startConnection) withObject:nil];
     }
@@ -93,7 +93,7 @@
         if (currDataSize==0) {
             isContine=NO;
         }
-        [self.audioDataDelegate audioData_Arrived:data contine:isContine];
+        [self.audioDataDelegate audioData_Arrived:self data:data contine:isContine];
         currDataSize=currDataSize+data.length;
         if (!isContine) {
             isContine=YES;
@@ -107,7 +107,7 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection{
     if (self.audioDataDelegate) {
-        [self.audioDataDelegate audioData_Finished:nil];
+        [self.audioDataDelegate audioData_Finished:self error:nil];
     }
 }
 

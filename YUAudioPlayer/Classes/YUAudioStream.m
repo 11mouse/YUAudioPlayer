@@ -20,6 +20,7 @@
     NSInteger dataOffset;
     double packetDuration;
     BOOL isSeeking;
+    BOOL shouldExit;
 }
 
 @end
@@ -35,11 +36,14 @@
         dataOffset=0;
         packetDuration=0;
         isSeeking=NO;
+//        NSLog(@"AudioFileStreamOpen");
         OSStatus status= AudioFileStreamOpen((__bridge void *)(self), propertyListenerProc, packetsProc, 0, &_audioFileStreamID);
         if (status!=noErr)
         {
             [self.audioProperty error:YUAudioError_AFS_OpenFail];
         }
+        shouldExit=NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioDataExited:) name:Noti_AudioDataExited object:nil];
     }
     return self;
 }
@@ -54,11 +58,14 @@
         dataOffset=0;
         packetDuration=0;
         isSeeking=NO;
+//        NSLog(@"AudioFileStreamOpen");
         OSStatus status= AudioFileStreamOpen((__bridge void *)(self), propertyListenerProc, packetsProc, fileTypeID, &_audioFileStreamID);
         if (status!=noErr)
         {
             [self.audioProperty error:YUAudioError_AFS_OpenFail];
         }
+        shouldExit=NO;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(audioDataExited:) name:Noti_AudioDataExited object:nil];
     }
     return self;
 }
@@ -86,8 +93,22 @@
 }
 
 -(void)close{
-    AudioFileStreamClose(_audioFileStreamID);
-    _audioFileStreamID=nil;
+    shouldExit=YES;
+}
+
+//释放资源
+-(void)audioDataExited:(NSNotification*)noti{
+    if (shouldExit) {
+        if (noti&&noti.userInfo&&[noti.userInfo objectForKey:@"audioVersion"]) {
+            NSNumber* dataVersionNum=[noti.userInfo objectForKey:@"audioVersion"];
+            if ([dataVersionNum integerValue]==self.audioVersion) {
+//                NSLog(@"AudioFileStreamClose");
+                AudioFileStreamClose(_audioFileStreamID);
+                _audioFileStreamID=nil;
+                [[NSNotificationCenter defaultCenter] removeObserver:self];
+            }
+        }
+    }
 }
 
 #pragma mark audioStream Proc
