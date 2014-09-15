@@ -16,6 +16,7 @@
     NSInteger audioVersion;
     NSMutableDictionary *audioQueues;
     NSMutableDictionary *audioStreams;
+    BOOL shouldExit;
 }
 @property(nonatomic,retain) YUAudioDataBase *audioData;
 @property(nonatomic,retain) YUAudioQueue *audioQueue;
@@ -24,7 +25,7 @@
 @end
 
 @implementation YUAudioPlayer
-
+static NSMutableArray *playerArr;
 - (instancetype)init
 {
     self = [super init];
@@ -34,6 +35,11 @@
         audioVersion=0;
         audioQueues=[[NSMutableDictionary alloc] init];
         audioStreams=[[NSMutableDictionary alloc] init];
+        if (!playerArr) {
+            playerArr=[[NSMutableArray alloc] init];
+        }
+        shouldExit=NO;
+        [playerArr addObject:self];
     }
     return self;
 }
@@ -78,6 +84,10 @@
         [self.audioProperty error:YUAudioError_AD_Nil];
         return;
     }
+    if (![playerArr containsObject:self]) {
+        shouldExit=NO;
+        [playerArr addObject:self];
+    }
     self.audioData=audioData;
     self.audioData.audioVersion=++audioVersion;
     self.audioData.audioProperty=self.audioProperty;
@@ -99,11 +109,7 @@
 }
 
 -(void)stop{
-    if (_audioData) {
-        [_audioData cancel];
-        _audioData.audioProperty=nil;
-        self.audioData=nil;
-    }
+    shouldExit=YES;
     if (_audioQueue) {
         [_audioQueue stop];
         _audioQueue.audioProperty=nil;
@@ -112,6 +118,11 @@
     }
     else{
         _audioProperty.state=YUAudioState_Stop;
+    }
+    if (_audioData) {
+        [_audioData cancel];
+        _audioData.audioProperty=nil;
+        self.audioData=nil;
     }
     if (_audioStream) {
         _audioStream.audioStreamDelegate=nil;
@@ -210,6 +221,9 @@
 -(void)audioData_ShouldExit:(YUAudioDataBase*)currAudioData{
     [audioQueues removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)currAudioData.audioVersion]];
     [audioStreams removeObjectForKey:[NSString stringWithFormat:@"%ld",(long)currAudioData.audioVersion]];
+    if (shouldExit) {
+        [playerArr removeObject:self];
+    }
 }
 
 #pragma mark YUAudioStreamDelegate
